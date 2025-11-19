@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS=0;
+
 CREATE TABLE `accounts`
 (
     id                     INT                not null
@@ -30,7 +32,7 @@ create unique index accounts_username_unique
 
 CREATE TABLE `cache`
 (
-    key        VARCHAR(255) not null
+    `key`        VARCHAR(255) not null
         primary key,
     value      text    not null,
     expiration INT not null
@@ -38,7 +40,7 @@ CREATE TABLE `cache`
 
 CREATE TABLE `cache_locks`
 (
-    key        VARCHAR(255) not null
+    `key`        VARCHAR(255) not null
         primary key,
     owner      VARCHAR(255) not null,
     expiration INT not null
@@ -49,9 +51,9 @@ CREATE TABLE `categories`
     id           INT not null
         PRIMARY KEY AUTO_INCREMENT,
     parent_id    INT
-        REFERENCES `categories`
+        REFERENCES `categories`(id) (id)
             on delete cascade,
-    for          VARCHAR(255)    default 'posts',
+    `for`          VARCHAR(255)    default 'posts',
     type         VARCHAR(255)    default 'category',
     name         text    not null,
     slug         VARCHAR(255) not null,
@@ -75,16 +77,16 @@ CREATE TABLE `categories_metas`
     model_id    INT,
     model_type  VARCHAR(255),
     category_id INT not null
-        REFERENCES `categories`
+        REFERENCES `categories`(id) (id)
             on delete cascade,
-    key         VARCHAR(255) not null,
+    `key`         VARCHAR(255) not null,
     value       text,
     created_at  datetime,
     updated_at  datetime
 );
 
 create index categories_metas_key_index
-    on categories_metas (key);
+    on `categories_metas` (`key`);
 
 CREATE TABLE `comments`
 (
@@ -138,7 +140,7 @@ CREATE TABLE `cities`
         PRIMARY KEY AUTO_INCREMENT,
     name         VARCHAR(255) not null,
     country_id   INT not null
-        REFERENCES `countries`
+        REFERENCES `countries`(id) (id)
             on delete cascade,
     created_at   datetime,
     updated_at   datetime,
@@ -155,7 +157,7 @@ CREATE TABLE `areas`
         PRIMARY KEY AUTO_INCREMENT,
     name         VARCHAR(255) not null,
     city_id      INT not null
-        REFERENCES `cities`
+        REFERENCES `cities`(id) (id)
             on delete cascade,
     created_at   datetime,
     updated_at   datetime,
@@ -174,7 +176,7 @@ CREATE TABLE `companies`
     id                  INT not null
         PRIMARY KEY AUTO_INCREMENT,
     country_id          INT
-        REFERENCES `countries`,
+        REFERENCES `countries`(id) (id),
     name                VARCHAR(255) not null,
     ceo                 VARCHAR(255),
     address             VARCHAR(255),
@@ -195,7 +197,7 @@ CREATE TABLE `branches`
     id            INT not null
         PRIMARY KEY AUTO_INCREMENT,
     company_id    INT not null
-        REFERENCES `companies`,
+        REFERENCES `companies`(id) (id),
     name          VARCHAR(255) not null,
     phone         VARCHAR(255),
     branch_number INT default '1',
@@ -284,7 +286,7 @@ CREATE TABLE `gift_cards`
     id           INT not null
         PRIMARY KEY AUTO_INCREMENT,
     account_id   INT
-        REFERENCES `accounts`
+        REFERENCES `accounts`(id) (id)
             on delete cascade,
     name         VARCHAR(255) not null,
     code         VARCHAR(255) not null,
@@ -356,13 +358,13 @@ CREATE TABLE `locations`
     model_id     INT,
     street       VARCHAR(255) not null,
     area_id      INT
-        REFERENCES `areas`
+        REFERENCES `areas`(id) (id)
             on delete cascade,
     city_id      INT
-        REFERENCES `cities`
+        REFERENCES `cities`(id) (id)
             on delete cascade,
     country_id   INT
-        REFERENCES `countries`
+        REFERENCES `countries`(id) (id)
             on delete cascade,
     home_number  INT,
     flat_number  INT,
@@ -458,16 +460,16 @@ CREATE TABLE `post_metas`
     model_id   INT,
     model_type VARCHAR(255),
     post_id    INT not null
-        REFERENCES `posts`
+        REFERENCES `posts`(id) (id)
             on delete cascade,
-    key        VARCHAR(255) not null,
+    `key`        VARCHAR(255) not null,
     value      text,
     created_at datetime,
     updated_at datetime
 );
 
 create index post_metas_key_index
-    on post_metas (key);
+    on `post_metas` (`key`);
 
 create unique index posts_slug_unique
     on posts (slug);
@@ -475,20 +477,20 @@ create unique index posts_slug_unique
 CREATE TABLE `posts_has_category`
 (
     post_id     INT not null
-        REFERENCES `posts`
+        REFERENCES `posts`(id) (id)
             on delete cascade,
     category_id INT not null
-        REFERENCES `categories`
+        REFERENCES `categories`(id) (id)
             on delete cascade
 );
 
 CREATE TABLE `posts_has_tags`
 (
     post_id INT not null
-        REFERENCES `posts`
+        REFERENCES `posts`(id) (id)
             on delete cascade,
     tag_id  INT not null
-        REFERENCES `categories`
+        REFERENCES `categories`(id) (id)
             on delete cascade
 );
 
@@ -497,7 +499,7 @@ CREATE TABLE `products`
     id                  INT not null
         PRIMARY KEY AUTO_INCREMENT,
     category_id         INT
-        REFERENCES `categories`
+        REFERENCES `categories`(id) (id)
             on delete cascade,
     type                VARCHAR(255)    default 'product',
     name                text    not null,
@@ -534,10 +536,10 @@ CREATE TABLE `carts`
     id         INT                not null
         PRIMARY KEY AUTO_INCREMENT,
     account_id INT
-        REFERENCES `accounts`
+        REFERENCES `accounts`(id) (id)
             on delete cascade,
     product_id INT
-        REFERENCES `products`,
+        REFERENCES `products`(id) (id),
     session_id VARCHAR(255),
     item       VARCHAR(255)                not null,
     price      double     default '0' not null,
@@ -560,7 +562,7 @@ CREATE TABLE `codes`
     id         INT                not null
         PRIMARY KEY AUTO_INCREMENT,
     product_id INT                not null
-        REFERENCES `products`
+        REFERENCES `products`(id) (id)
             on delete cascade,
     code       VARCHAR(255)                not null,
     is_used    TINYINT(1) DEFAULT 0 not null,
@@ -577,7 +579,7 @@ CREATE TABLE `comparisons`
     user_id      INT,
     user_type    VARCHAR(255),
     product_id   INT not null
-        REFERENCES `products`
+        REFERENCES `products`(id) (id)
             on delete cascade,
     compare_with text,
     created_at   datetime,
@@ -589,10 +591,10 @@ CREATE TABLE `downloads`
     id         INT not null
         PRIMARY KEY AUTO_INCREMENT,
     account_id INT not null
-        REFERENCES `accounts`
+        REFERENCES `accounts`(id) (id)
             on delete cascade,
     product_id INT not null
-        REFERENCES `products`
+        REFERENCES `products`(id) (id)
             on delete cascade,
     created_at datetime,
     updated_at datetime
@@ -601,29 +603,29 @@ CREATE TABLE `downloads`
 CREATE TABLE `product_has_categories`
 (
     category_id INT not null
-        REFERENCES `categories`
+        REFERENCES `categories`(id) (id)
             on delete cascade,
     product_id  INT not null
-        REFERENCES `products`
+        REFERENCES `products`(id) (id)
 );
 
 CREATE TABLE `product_has_collection`
 (
     product_id    INT not null
-        REFERENCES `products`
+        REFERENCES `products`(id) (id)
             on delete cascade,
     collection_id INT not null
-        REFERENCES `products`
+        REFERENCES `products`(id) (id)
             on delete cascade
 );
 
 CREATE TABLE `product_has_tags`
 (
     product_id INT not null
-        REFERENCES `products`
+        REFERENCES `products`(id) (id)
             on delete cascade,
     tag_id     INT not null
-        REFERENCES `categories`
+        REFERENCES `categories`(id) (id)
             on delete cascade
 );
 
@@ -632,9 +634,9 @@ CREATE TABLE `product_metas`
     id         INT not null
         PRIMARY KEY AUTO_INCREMENT,
     product_id INT not null
-        REFERENCES `products`
+        REFERENCES `products`(id) (id)
             on delete cascade,
-    key        VARCHAR(255) not null,
+    `key`        VARCHAR(255) not null,
     value      text,
     model_id   INT,
     model_type VARCHAR(255),
@@ -647,10 +649,10 @@ CREATE TABLE `product_reviews`
     id           INT                not null
         PRIMARY KEY AUTO_INCREMENT,
     product_id   INT                not null
-        REFERENCES `products`
+        REFERENCES `products`(id) (id)
             on delete cascade,
     account_id   INT                not null
-        REFERENCES `accounts`
+        REFERENCES `accounts`(id) (id)
             on delete cascade,
     rate         double     default '0' not null,
     review       text,
@@ -667,7 +669,7 @@ CREATE TABLE `referral_codes`
     id           INT not null
         PRIMARY KEY AUTO_INCREMENT,
     account_id   INT
-        REFERENCES `accounts`
+        REFERENCES `accounts`(id) (id)
             on delete cascade,
     name         VARCHAR(255) not null,
     code         VARCHAR(255) not null,
@@ -747,7 +749,7 @@ CREATE TABLE `deliveries`
     id                 INT not null
         PRIMARY KEY AUTO_INCREMENT,
     shipping_vendor_id INT
-        REFERENCES `shipping_vendors`
+        REFERENCES `shipping_vendors`(id) (id)
             on delete cascade,
     name               VARCHAR(255) not null,
     phone              VARCHAR(255) not null,
@@ -765,20 +767,20 @@ CREATE TABLE `shipping_prices`
     id                 INT not null
         PRIMARY KEY AUTO_INCREMENT,
     shipping_vendor_id INT
-        REFERENCES `shipping_vendors`
+        REFERENCES `shipping_vendors`(id) (id)
             on delete cascade,
     delivery_id        INT
-        REFERENCES `deliveries`
+        REFERENCES `deliveries`(id) (id)
             on delete cascade,
     type               VARCHAR(255) default 'delivery',
     country_id         INT
-        REFERENCES `countries`
+        REFERENCES `countries`(id) (id)
             on delete cascade,
     city_id            INT
-        REFERENCES `cities`
+        REFERENCES `cities`(id) (id)
             on delete cascade,
     area_id            INT
-        REFERENCES `areas`
+        REFERENCES `areas`(id) (id)
             on delete cascade,
     price              double  default '0',
     created_at         datetime,
@@ -792,14 +794,14 @@ CREATE TABLE `types`
     id           INT                not null
         PRIMARY KEY AUTO_INCREMENT,
     parent_id    INT
-        REFERENCES `types`
+        REFERENCES `types`(id) (id)
             on delete cascade,
     model_type   VARCHAR(255),
     model_id     INT,
-    for          VARCHAR(255)    default 'posts',
+    `for`          VARCHAR(255)    default 'posts',
     type         VARCHAR(255)    default 'category',
     name         VARCHAR(255)                not null,
-    key          VARCHAR(255)                not null,
+    `key`          VARCHAR(255)                not null,
     description  text,
     color        VARCHAR(255),
     icon         VARCHAR(255),
@@ -812,7 +814,7 @@ CREATE TABLE `types`
 CREATE TABLE `typables`
 (
     type_id       INT not null
-        REFERENCES `types`
+        REFERENCES `types`(id) (id)
             on delete cascade,
     typables_id   INT not null,
     typables_type VARCHAR(255) not null
@@ -825,16 +827,16 @@ CREATE TABLE `types_metas`
     model_id   INT,
     model_type VARCHAR(255),
     type_id    INT not null
-        REFERENCES `types`
+        REFERENCES `types`(id) (id)
             on delete cascade,
-    key        VARCHAR(255) not null,
+    `key`        VARCHAR(255) not null,
     value      text,
     created_at datetime,
     updated_at datetime
 );
 
 create index types_metas_key_index
-    on types_metas (key);
+    on `types_metas` (`key`);
 
 CREATE TABLE `users`
 (
@@ -856,40 +858,40 @@ CREATE TABLE `orders`
     uuid               VARCHAR(255)                     not null,
     type               VARCHAR(255)    default 'system',
     user_id            INT
-        REFERENCES `users`
+        REFERENCES `users`(id) (id)
             on delete cascade,
     country_id         INT
-        REFERENCES `countries`
+        REFERENCES `countries`(id) (id)
             on delete cascade,
     area_id            INT
-        REFERENCES `areas`
+        REFERENCES `areas`(id) (id)
             on delete cascade,
     city_id            INT
-        REFERENCES `cities`
+        REFERENCES `cities`(id) (id)
             on delete cascade,
     address_id         INT
-        REFERENCES `locations`
+        REFERENCES `locations`(id) (id)
             on delete cascade,
     account_id         INT                     not null
-        REFERENCES `accounts`
+        REFERENCES `accounts`(id) (id)
             on delete cascade,
     cashier_id         INT
-        REFERENCES `users`
+        REFERENCES `users`(id) (id)
             on delete cascade,
     coupon_id          INT
-        REFERENCES `coupons`
+        REFERENCES `coupons`(id) (id)
             on delete cascade,
     shipper_id         INT
-        REFERENCES `deliveries`
+        REFERENCES `deliveries`(id) (id)
             on delete cascade,
     shipping_vendor_id INT
-        REFERENCES `shipping_vendors`
+        REFERENCES `shipping_vendors`(id) (id)
             on delete cascade,
     company_id         INT
-        REFERENCES `companies`
+        REFERENCES `companies`(id) (id)
             on delete cascade,
     branch_id          INT
-        REFERENCES `branches`
+        REFERENCES `branches`(id) (id)
             on delete cascade,
     name               VARCHAR(255),
     phone              VARCHAR(255),
@@ -923,10 +925,10 @@ CREATE TABLE `order_logs`
     id         INT not null
         PRIMARY KEY AUTO_INCREMENT,
     user_id    INT
-        REFERENCES `users`
+        REFERENCES `users`(id) (id)
             on delete cascade,
     order_id   INT not null
-        REFERENCES `orders`
+        REFERENCES `orders`(id) (id)
             on delete cascade,
     status     VARCHAR(255)    default 'pending',
     note       text    not null,
@@ -940,9 +942,9 @@ CREATE TABLE `order_metas`
     id         INT not null
         PRIMARY KEY AUTO_INCREMENT,
     order_id   INT not null
-        REFERENCES `orders`
+        REFERENCES `orders`(id) (id)
             on delete cascade,
-    key        VARCHAR(255) not null,
+    `key`        VARCHAR(255) not null,
     value      text,
     type       VARCHAR(255) default 'text',
     `group`    VARCHAR(255) default 'general',
@@ -958,15 +960,15 @@ CREATE TABLE `orders_items`
     id                INT not null
         PRIMARY KEY AUTO_INCREMENT,
     order_id          INT not null
-        REFERENCES `orders`
+        REFERENCES `orders`(id) (id)
             on delete cascade,
     refund_id         INT,
     warehouse_move_id INT,
     account_id        INT not null
-        REFERENCES `accounts`
+        REFERENCES `accounts`(id) (id)
             on delete cascade,
     product_id        INT
-        REFERENCES `products`
+        REFERENCES `products`(id) (id)
             on delete cascade,
     item              VARCHAR(255),
     price             double     default '0',
@@ -992,11 +994,13 @@ CREATE TABLE `wishlists`
     id         INT not null
         PRIMARY KEY AUTO_INCREMENT,
     account_id INT not null
-        REFERENCES `accounts`
+        REFERENCES `accounts`(id) (id)
             on delete cascade,
     product_id INT not null
-        REFERENCES `products`
+        REFERENCES `products`(id) (id)
             on delete cascade,
     created_at datetime,
     updated_at datetime
 );
+
+SET FOREIGN_KEY_CHECKS=1;
