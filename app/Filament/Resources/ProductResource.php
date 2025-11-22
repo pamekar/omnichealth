@@ -1,13 +1,13 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources;
+namespace App\Filament\Resources;
 
 use Filament\Resources\Concerns\Translatable;
 use Illuminate\Support\Str;
 use TomatoPHP\FilamentCms\Models\Category;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\ProductResource\Pages;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\ProductResource\RelationManagers;
-use TomatoPHP\FilamentEcommerce\Models\Product;
+use App\Filament\Resources\ProductResource\Pages;
+use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;

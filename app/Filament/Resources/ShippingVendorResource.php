@@ -1,10 +1,10 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources;
+namespace App\Filament\Resources;
 
-use TomatoPHP\FilamentEcommerce\Filament\Resources\ShippingVendorResource\Pages;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\ShippingVendorResource\RelationManagers;
-use TomatoPHP\FilamentEcommerce\Models\ShippingVendor;
+use App\Filament\Resources\ShippingVendorResource\Pages;
+use App\Filament\Resources\ShippingVendorResource\RelationManagers;
+use App\Models\ShippingVendor;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;

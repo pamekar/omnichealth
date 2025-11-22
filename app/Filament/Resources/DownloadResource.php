@@ -1,10 +1,10 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources;
+namespace App\Filament\Resources;
 
-use TomatoPHP\FilamentEcommerce\Filament\Resources\DownloadResource\Pages;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\DownloadResource\RelationManagers;
-use TomatoPHP\FilamentEcommerce\Models\Download;
+use App\Filament\Resources\DownloadResource\Pages;
+use App\Filament\Resources\DownloadResource\RelationManagers;
+use App\Models\Download;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;

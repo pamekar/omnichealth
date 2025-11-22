@@ -1,14 +1,14 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources\OrderResource\Pages;
+namespace App\Filament\Resources\OrderResource\Pages;
 
 use Carbon\Carbon;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\OrderResource;
+use App\Filament\Resources\OrderResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
-use TomatoPHP\FilamentEcommerce\Models\OrderLog;
-use TomatoPHP\FilamentEcommerce\Models\OrdersItem;
-use TomatoPHP\FilamentEcommerce\Models\Product;
+use App\Models\OrderLog;
+use App\Models\OrdersItem;
+use App\Models\Product;
 
 class EditOrder extends EditRecord
 {

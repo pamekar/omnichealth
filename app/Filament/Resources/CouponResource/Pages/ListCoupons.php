@@ -1,9 +1,9 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources\CouponResource\Pages;
+namespace App\Filament\Resources\CouponResource\Pages;
 
 use Filament\Resources\Pages\ManageRecords;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\CouponResource;
+use App\Filament\Resources\CouponResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 

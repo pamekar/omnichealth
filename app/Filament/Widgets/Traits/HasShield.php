@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Widgets\Traits;
+namespace App\Filament\Widgets\Traits;
 
 use BezhanSalleh\FilamentShield\Support\Utils;
 use Filament\Facades\Filament;

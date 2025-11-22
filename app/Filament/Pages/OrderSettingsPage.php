@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Pages;
+namespace App\Filament\Pages;
 
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
@@ -11,10 +11,10 @@ use Filament\Forms\Get;
 use Filament\Pages\Actions\Action;
 use Filament\Pages\SettingsPage;
 use TomatoPHP\FilamentCms\Services\Contracts\Section;
-use TomatoPHP\FilamentEcommerce\Filament\Pages;
-use TomatoPHP\FilamentEcommerce\Models\Branch;
-use TomatoPHP\FilamentEcommerce\Models\Company;
-use TomatoPHP\FilamentEcommerce\Settings\OrderingSettings;
+use App\Filament\Pages;
+use App\Models\Branch;
+use App\Models\Company;
+use App\Settings\OrderingSettings;
 use TomatoPHP\FilamentSettingsHub\Settings\SitesSettings;
 
 class OrderSettingsPage extends SettingsPage

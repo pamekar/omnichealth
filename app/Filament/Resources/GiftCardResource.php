@@ -1,12 +1,12 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources;
+namespace App\Filament\Resources;
 
 use Illuminate\Support\Str;
 use TomatoPHP\FilamentAccounts\Models\Account;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\GiftCardResource\Pages;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\GiftCardResource\RelationManagers;
-use TomatoPHP\FilamentEcommerce\Models\GiftCard;
+use App\Filament\Resources\GiftCardResource\Pages;
+use App\Filament\Resources\GiftCardResource\RelationManagers;
+use App\Models\GiftCard;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;

@@ -17,7 +17,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use TomatoPHP\FilamentEcommerce\FilamentEcommercePlugin;
+use App\FilamentEcommercePlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -54,12 +54,14 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])->plugin(FilamentEcommercePlugin::make()
+            ])->plugin(
+//                FilamentEcommercePlugin::make()
 //                ->useCoupon()
 //                ->useGiftCard()
 //                ->useReferralCode()
 //                ->allowOrderExport()
 //                ->allowOrderImport()
-                ->useWidgets());
+//                ->useWidgets()
+    );
     }
 }

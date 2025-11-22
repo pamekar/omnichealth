@@ -1,14 +1,14 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Import;
+namespace App\Filament\Import;
 
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
 use Illuminate\Support\Facades\DB;
-use TomatoPHP\FilamentEcommerce\Models\Branch;
-use TomatoPHP\FilamentEcommerce\Models\Company;
-use TomatoPHP\FilamentEcommerce\Models\Order;
+use App\Models\Branch;
+use App\Models\Company;
+use App\Models\Order;
 
 class ImportOrders extends Importer
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources\ProductResource\Pages;
+namespace App\Filament\Resources\ProductResource\Pages;
 
-use TomatoPHP\FilamentEcommerce\Filament\Resources\ProductResource;
+use App\Filament\Resources\ProductResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Pages;
+namespace App\Filament\Pages;
 
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Grid;
@@ -21,8 +21,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
-use TomatoPHP\FilamentEcommerce\Filament\Pages;
-use TomatoPHP\FilamentEcommerce\Settings\OrderingSettings;
+use App\Filament\Pages;
+use App\Settings\OrderingSettings;
 use TomatoPHP\FilamentIcons\Components\IconPicker;
 use TomatoPHP\FilamentSettingsHub\Settings\SitesSettings;
 use TomatoPHP\FilamentTypes\Components\TypeColumn;

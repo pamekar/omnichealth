@@ -1,9 +1,9 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources\ReferralCodeResource\Pages;
+namespace App\Filament\Resources\ReferralCodeResource\Pages;
 
 use Filament\Resources\Pages\ManageRecords;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\ReferralCodeResource;
+use App\Filament\Resources\ReferralCodeResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 

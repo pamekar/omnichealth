@@ -1,10 +1,10 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources;
+namespace App\Filament\Resources;
 
-use TomatoPHP\FilamentEcommerce\Filament\Resources\ComparisonResource\Pages;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\ComparisonResource\RelationManagers;
-use TomatoPHP\FilamentEcommerce\Models\Comparison;
+use App\Filament\Resources\ComparisonResource\Pages;
+use App\Filament\Resources\ComparisonResource\RelationManagers;
+use App\Models\Comparison;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;

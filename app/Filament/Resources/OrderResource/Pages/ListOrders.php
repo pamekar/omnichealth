@@ -1,9 +1,9 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources\OrderResource\Pages;
+namespace App\Filament\Resources\OrderResource\Pages;
 
-use TomatoPHP\FilamentEcommerce\Filament\Pages\OrderSettingsPage;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\OrderResource;
+use App\Filament\Pages\OrderSettingsPage;
+use App\Filament\Resources\OrderResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use TomatoPHP\FilamentTypes\Models\Type;

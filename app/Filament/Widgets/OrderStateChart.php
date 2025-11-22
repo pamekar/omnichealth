@@ -1,12 +1,12 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Widgets;
+namespace App\Filament\Widgets;
 
 use Filament\Widgets\ChartWidget;
 use Flowframe\Trend\Trend;
 use Illuminate\Contracts\Support\Htmlable;
-use TomatoPHP\FilamentEcommerce\Filament\Widgets\Traits\HasShield;
-use TomatoPHP\FilamentEcommerce\Models\Order;
+use App\Filament\Widgets\Traits\HasShield;
+use App\Models\Order;
 use TomatoPHP\FilamentTypes\Models\Type;
 
 class OrderStateChart extends ChartWidget

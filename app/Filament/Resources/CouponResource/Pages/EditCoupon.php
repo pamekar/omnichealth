@@ -1,8 +1,8 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources\CouponResource\Pages;
+namespace App\Filament\Resources\CouponResource\Pages;
 
-use TomatoPHP\FilamentEcommerce\Filament\Resources\CouponResource;
+use App\Filament\Resources\CouponResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 

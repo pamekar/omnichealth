@@ -1,13 +1,13 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Pages;
+namespace App\Filament\Pages;
 
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Actions\Action;
 use Filament\Pages\SettingsPage;
-use TomatoPHP\FilamentEcommerce\Settings\OrderingSettings;
+use App\Settings\OrderingSettings;
 use TomatoPHP\FilamentSettingsHub\Settings\SitesSettings;
 
 class InventorySettingsPage extends SettingsPage

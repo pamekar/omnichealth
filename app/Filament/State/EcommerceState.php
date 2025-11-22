@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\State;
+namespace App\Filament\State;
 
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Contracts\View\View;

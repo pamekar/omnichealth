@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources\ShippingVendorResource\RelationManagers;
+namespace App\Filament\Resources\ShippingVendorResource\RelationManagers;
 
 use Filament\Forms\Form;
 use Filament\Forms;
@@ -8,7 +8,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Model;
-use TomatoPHP\FilamentEcommerce\Models\Delivery;
+use App\Models\Delivery;
 use TomatoPHP\FilamentLocations\Models\City;
 use TomatoPHP\FilamentLocations\Models\Country;
 

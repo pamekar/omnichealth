@@ -1,9 +1,9 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources\CompanyResource\Pages;
+namespace App\Filament\Resources\CompanyResource\Pages;
 
 use Filament\Resources\Pages\ManageRecords;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\CompanyResource;
+use App\Filament\Resources\CompanyResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 

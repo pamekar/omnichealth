@@ -1,15 +1,15 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources\OrderResource\Pages;
+namespace App\Filament\Resources\OrderResource\Pages;
 
 use Carbon\Carbon;
-use TomatoPHP\FilamentEcommerce\Facades\FilamentEcommerce;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\OrderResource;
+use App\Facades\FilamentEcommerce;
+use App\Filament\Resources\OrderResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
-use TomatoPHP\FilamentEcommerce\Models\Coupon;
-use TomatoPHP\FilamentEcommerce\Models\OrderLog;
-use TomatoPHP\FilamentEcommerce\Models\Product;
+use App\Models\Coupon;
+use App\Models\OrderLog;
+use App\Models\Product;
 
 class CreateOrder extends CreateRecord
 {

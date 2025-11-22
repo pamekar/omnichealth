@@ -1,10 +1,10 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources;
+namespace App\Filament\Resources;
 
-use TomatoPHP\FilamentEcommerce\Filament\Resources\SearchResource\Pages;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\SearchResource\RelationManagers;
-use TomatoPHP\FilamentEcommerce\Models\Search;
+use App\Filament\Resources\SearchResource\Pages;
+use App\Filament\Resources\SearchResource\RelationManagers;
+use App\Models\Search;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;

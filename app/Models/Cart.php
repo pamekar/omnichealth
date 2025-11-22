@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use TomatoPHP\FilamentEcommerce\Models\Cart as BaseCart;
+use App\Models\Cart as BaseCart;
 
 class Cart extends BaseCart
 {

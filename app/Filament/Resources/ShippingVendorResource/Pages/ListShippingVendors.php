@@ -1,9 +1,9 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources\ShippingVendorResource\Pages;
+namespace App\Filament\Resources\ShippingVendorResource\Pages;
 
 use Filament\Resources\Pages\ManageRecords;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\ShippingVendorResource;
+use App\Filament\Resources\ShippingVendorResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources\OrderResource\RelationManagers;
+namespace App\Filament\Resources\OrderResource\RelationManagers;
 
 use Filament\Forms\Form;
 use Filament\Forms;

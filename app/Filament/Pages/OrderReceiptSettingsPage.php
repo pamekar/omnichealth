@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Pages;
+namespace App\Filament\Pages;
 
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Textarea;
@@ -8,8 +8,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Pages\Actions\Action;
 use Filament\Pages\SettingsPage;
-use TomatoPHP\FilamentEcommerce\Filament\Pages;
-use TomatoPHP\FilamentEcommerce\Settings\OrderingSettings;
+use App\Filament\Pages;
+use App\Settings\OrderingSettings;
 use TomatoPHP\FilamentSettingsHub\Settings\SitesSettings;
 
 class OrderReceiptSettingsPage extends SettingsPage

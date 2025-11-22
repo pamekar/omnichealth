@@ -1,12 +1,12 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Export;
+namespace App\Filament\Export;
 
 
 use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
 use Filament\Actions\Exports\Models\Export;
-use TomatoPHP\FilamentEcommerce\Models\Order;
+use App\Models\Order;
 use TomatoPHP\FilamentTypes\Models\Type;
 
 class ExportOrders extends Exporter

@@ -1,9 +1,9 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources\GiftCardResource\Pages;
+namespace App\Filament\Resources\GiftCardResource\Pages;
 
 use Filament\Resources\Pages\ManageRecords;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\GiftCardResource;
+use App\Filament\Resources\GiftCardResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 

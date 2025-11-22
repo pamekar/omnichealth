@@ -1,12 +1,12 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources;
+namespace App\Filament\Resources;
 
 use Illuminate\Support\Str;
 use TomatoPHP\FilamentCms\Models\Category;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\CouponResource\Pages;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\CouponResource\RelationManagers;
-use TomatoPHP\FilamentEcommerce\Models\Coupon;
+use App\Filament\Resources\CouponResource\Pages;
+use App\Filament\Resources\CouponResource\RelationManagers;
+use App\Models\Coupon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,7 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use TomatoPHP\FilamentEcommerce\Models\Product;
+use App\Models\Product;
 
 class CouponResource extends Resource
 {

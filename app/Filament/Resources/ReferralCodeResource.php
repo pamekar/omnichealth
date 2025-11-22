@@ -1,12 +1,12 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources;
+namespace App\Filament\Resources;
 
 use Illuminate\Support\Str;
 use TomatoPHP\FilamentAccounts\Models\Account;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\ReferralCodeResource\Pages;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\ReferralCodeResource\RelationManagers;
-use TomatoPHP\FilamentEcommerce\Models\ReferralCode;
+use App\Filament\Resources\ReferralCodeResource\Pages;
+use App\Filament\Resources\ReferralCodeResource\RelationManagers;
+use App\Models\ReferralCode;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;

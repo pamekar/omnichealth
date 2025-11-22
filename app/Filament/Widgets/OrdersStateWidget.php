@@ -1,19 +1,19 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Widgets;
+namespace App\Filament\Widgets;
 
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Flowframe\Trend\Trend;
-use TomatoPHP\FilamentEcommerce\Filament\State\EcommerceState;
-use TomatoPHP\FilamentEcommerce\Filament\Widgets\Traits\HasShield;
-use TomatoPHP\FilamentEcommerce\Models\Order;
+use App\Filament\State\EcommerceState;
+use App\Filament\Widgets\Traits\HasShield;
+use App\Models\Order;
 use TomatoPHP\FilamentTypes\Models\Type;
 
 class OrdersStateWidget extends BaseWidget
 {
     use HasShield;
-    
+
     protected static string $view = 'filament-widgets::stats-overview-widget';
 
     protected function getStats(): array

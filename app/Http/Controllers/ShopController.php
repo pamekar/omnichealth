@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use TomatoPHP\FilamentEcommerce\Models\Product;
+use App\Models\Product;
 
 class ShopController extends Controller
 {

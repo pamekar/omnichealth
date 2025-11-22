@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Filament\Resources\CompanyResource\RelationManagers;
+namespace App\Filament\Resources\CompanyResource\RelationManagers;
 
 use Filament\Forms\Form;
 use Filament\Forms;
@@ -8,7 +8,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Model;
-use TomatoPHP\FilamentEcommerce\Models\Company;
+use App\Models\Company;
 
 class CompanyBranches extends RelationManager
 {
