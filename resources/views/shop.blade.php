@@ -15,13 +15,15 @@
                  @forelse ($products as $product)
                     <div class="product-card" data-aos="fade-up" data-aos-delay="{{ 100 + ($loop->iteration * 50) }}">
                         <a href="#" class="product-image-container">
-                            <img src="https://placehold.co/600x400/007bff/white?text={{ urlencode($product->name) }}" alt="{{ $product->name }}">
+                            <img
+                                src="{{$product->getMedia('feature_image')->first()?->getUrl()??'https://placehold.co/600x400/007bff/white?text='. urlencode($product->name)}}"
+                                alt="{{ $product->name }}">
                         </a>
                         <div class="product-content">
                             <h3 class="product-name">{{ $product->name }}</h3>
                             <p class="product-description">{{ Str::limit($product->description, 80) ?: 'High-quality medical product.' }}</p>
                             <div class="product-footer">
-                                <span class="product-price">${{ number_format($product->price / 100, 2) }}</span>
+                                <span class="product-price">₦{{ number_format($product->price / 100, 2) }}</span>
                                 <form action="{{ route('cart.store') }}" method="POST">
                                     @csrf
                                     <input type="hidden" value="{{ $product->id }}" name="id">
