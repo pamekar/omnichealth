@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Models;
+namespace App\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -32,7 +32,7 @@ class OrderLog extends Model
      */
     public function order()
     {
-        return $this->belongsTo('TomatoPHP\FilamentEcommerce\Models\Order');
+        return $this->belongsTo('App\Models\Order');
     }
 
     /**

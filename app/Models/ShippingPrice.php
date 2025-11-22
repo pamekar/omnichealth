@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use TomatoPHP\TomatoLocations\Models\Area;
@@ -60,7 +60,7 @@ class ShippingPrice extends Model
      */
     public function delivery()
     {
-        return $this->belongsTo('TomatoPHP\FilamentEcommerce\Models\Delivery');
+        return $this->belongsTo('App\Models\Delivery');
     }
 
     /**
@@ -68,6 +68,6 @@ class ShippingPrice extends Model
      */
     public function shippingVendor()
     {
-        return $this->belongsTo('TomatoPHP\FilamentEcommerce\Models\ShippingVendor');
+        return $this->belongsTo('App\Models\ShippingVendor');
     }
 }

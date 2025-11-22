@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Models;
+namespace App\Models;
 
 use App\Models\Team;
 use Illuminate\Database\Eloquent\Model;
@@ -92,7 +92,7 @@ class Product extends Model implements HasMedia
      */
     public function collection()
     {
-        return $this->belongsToMany('TomatoPHP\FilamentEcommerce\Models\Product', 'product_has_collection', 'collection_id');
+        return $this->belongsToMany('App\Models\Product', 'product_has_collection', 'collection_id');
     }
 
 
@@ -134,7 +134,7 @@ class Product extends Model implements HasMedia
      */
     public function productReviews()
     {
-        return $this->hasMany('TomatoPHP\FilamentEcommerce\Models\ProductReview');
+        return $this->hasMany('App\Models\ProductReview');
     }
 
     /**

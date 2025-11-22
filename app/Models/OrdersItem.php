@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use TomatoPHP\TomatoProducts\Models\Product;
@@ -52,7 +52,7 @@ class OrdersItem extends Model
      */
     public function order()
     {
-        return $this->belongsTo('TomatoPHP\FilamentEcommerce\Models\Order');
+        return $this->belongsTo('App\Models\Order');
     }
 
     /**
@@ -60,6 +60,6 @@ class OrdersItem extends Model
      */
     public function product()
     {
-        return $this->belongsTo(\TomatoPHP\FilamentEcommerce\Models\Product::class);
+        return $this->belongsTo(\App\Models\Product::class);
     }
 }

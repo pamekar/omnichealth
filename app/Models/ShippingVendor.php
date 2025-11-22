@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Models;
+namespace App\Models;
 
 use App\Models\Team;
 use Illuminate\Database\Eloquent\Model;
@@ -41,7 +41,7 @@ class ShippingVendor extends Model implements HasMedia
     }
 
     public function deliveries(){
-        return $this->hasMany('TomatoPHP\FilamentEcommerce\Models\Delivery');
+        return $this->hasMany('App\Models\Delivery');
     }
 
     /**
@@ -49,7 +49,7 @@ class ShippingVendor extends Model implements HasMedia
      */
     public function orders()
     {
-        return $this->hasMany('TomatoPHP\FilamentEcommerce\Models\Order');
+        return $this->hasMany('App\Models\Order');
     }
 
     /**
@@ -57,6 +57,6 @@ class ShippingVendor extends Model implements HasMedia
      */
     public function shippingPrices()
     {
-        return $this->hasMany('TomatoPHP\FilamentEcommerce\Models\ShippingPrice');
+        return $this->hasMany('App\Models\ShippingPrice');
     }
 }

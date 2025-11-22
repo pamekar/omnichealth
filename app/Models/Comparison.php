@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Models;
+namespace App\Models;
 
 use App\Models\Team;
 use Illuminate\Database\Eloquent\Model;
@@ -23,7 +23,7 @@ class Comparison extends Model
      */
     protected $fillable = ['team_id', 'account_id', 'product_id', 'compare_with', 'created_at', 'updated_at'];
 
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

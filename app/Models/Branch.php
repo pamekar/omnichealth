@@ -1,9 +1,9 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use TomatoPHP\FilamentEcommerce\Models\Order;
+use App\Models\Order;
 
 /**
  * @property integer $id
@@ -27,7 +27,7 @@ class Branch extends Model
 
     public function company()
     {
-        return $this->belongsTo('TomatoPHP\FilamentEcommerce\Models\Company');
+        return $this->belongsTo('App\Models\Company');
     }
 
     /**

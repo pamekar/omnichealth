@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,14 +27,14 @@ class Delivery extends Model
     ];
 
     public function vendor(){
-        return $this->belongsTo('TomatoPHP\FilamentEcommerce\Models\ShippingVendor', 'shipping_vendor_id');
+        return $this->belongsTo('App\Models\ShippingVendor', 'shipping_vendor_id');
     }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function orders()
     {
-        return $this->hasMany('TomatoPHP\FilamentEcommerce\Models\Order', 'shipper_id');
+        return $this->hasMany('App\Models\Order', 'shipper_id');
     }
 
     /**
@@ -42,6 +42,6 @@ class Delivery extends Model
      */
     public function shippingPrices()
     {
-        return $this->hasMany('TomatoPHP\FilamentEcommerce\Models\ShippingPrice');
+        return $this->hasMany('App\Models\ShippingPrice');
     }
 }

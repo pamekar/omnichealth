@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -40,7 +40,7 @@ class Company extends Model implements HasMedia
      */
     public function branches()
     {
-        return $this->hasMany('TomatoPHP\FilamentEcommerce\Models\Branch', 'company_id', 'id');
+        return $this->hasMany('App\Models\Branch', 'company_id', 'id');
     }
 
     /**

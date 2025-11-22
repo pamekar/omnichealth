@@ -1,12 +1,12 @@
 <?php
 
-namespace TomatoPHP\FilamentEcommerce\Models;
+namespace App\Models;
 
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use TomatoPHP\FilamentEcommerce\Models\Branch;
-use TomatoPHP\FilamentEcommerce\Models\Coupon;
+use App\Models\Branch;
+use App\Models\Coupon;
 use TomatoPHP\FilamentLocations\Models\Location;
 use TomatoPHP\FilamentLocations\Models\Area;
 use TomatoPHP\FilamentLocations\Models\City;
@@ -76,43 +76,43 @@ class Order extends Model
     protected $fillable = [
         'team_id',
         'company_id',
-        'user_id', 
-        'country_id', 
-        'area_id', 
-        'city_id', 
-        'address_id', 
-        'account_id', 
-        'cashier_id', 
-        'coupon_id', 
-        'shipper_id', 
-        'shipping_vendor_id', 
-        'branch_id', 
-        'uuid', 
-        'type', 
-        'name', 
-        'phone', 
-        'flat', 
-        'address', 
-        'source', 
-        'shipper_vendor', 
-        'total', 
-        'discount', 
-        'shipping', 
-        'vat', 
-        'status', 
-        'is_approved', 
-        'is_closed', 
-        'is_on_table', 
-        'table', 
-        'notes', 
-        'has_returns', 
-        'return_total', 
-        'reason', 
-        'is_payed', 
-        'payment_method', 
-        'payment_vendor', 
-        'payment_vendor_id', 
-        'created_at', 
+        'user_id',
+        'country_id',
+        'area_id',
+        'city_id',
+        'address_id',
+        'account_id',
+        'cashier_id',
+        'coupon_id',
+        'shipper_id',
+        'shipping_vendor_id',
+        'branch_id',
+        'uuid',
+        'type',
+        'name',
+        'phone',
+        'flat',
+        'address',
+        'source',
+        'shipper_vendor',
+        'total',
+        'discount',
+        'shipping',
+        'vat',
+        'status',
+        'is_approved',
+        'is_closed',
+        'is_on_table',
+        'table',
+        'notes',
+        'has_returns',
+        'return_total',
+        'reason',
+        'is_payed',
+        'payment_method',
+        'payment_vendor',
+        'payment_vendor_id',
+        'created_at',
         'updated_at'
     ];
 
@@ -137,7 +137,7 @@ class Order extends Model
      */
     public function orderLogs()
     {
-        return $this->hasMany('TomatoPHP\FilamentEcommerce\Models\OrderLog');
+        return $this->hasMany('App\Models\OrderLog');
     }
 
     public function company()
@@ -151,7 +151,7 @@ class Order extends Model
      */
     public function orderMetas()
     {
-        return $this->hasMany('TomatoPHP\FilamentEcommerce\Models\OrderMeta');
+        return $this->hasMany('App\Models\OrderMeta');
     }
 
     /**
@@ -198,7 +198,7 @@ class Order extends Model
      */
     public function branch()
     {
-        return $this->belongsTo(\TomatoPHP\FilamentEcommerce\Models\Branch::class);
+        return $this->belongsTo(\App\Models\Branch::class);
     }
 
     /**
@@ -230,7 +230,7 @@ class Order extends Model
      */
     public function coupon()
     {
-        return $this->belongsTo(\TomatoPHP\FilamentEcommerce\Models\Coupon::class);
+        return $this->belongsTo(\App\Models\Coupon::class);
     }
 
     /**
@@ -238,7 +238,7 @@ class Order extends Model
      */
     public function shipper()
     {
-        return $this->belongsTo('TomatoPHP\FilamentEcommerce\Models\Delivery', 'shipper_id');
+        return $this->belongsTo('App\Models\Delivery', 'shipper_id');
     }
 
     /**
@@ -246,7 +246,7 @@ class Order extends Model
      */
     public function shippingVendor()
     {
-        return $this->belongsTo('TomatoPHP\FilamentEcommerce\Models\ShippingVendor');
+        return $this->belongsTo('App\Models\ShippingVendor');
     }
 
     /**
@@ -262,6 +262,6 @@ class Order extends Model
      */
     public function ordersItems()
     {
-        return $this->hasMany('TomatoPHP\FilamentEcommerce\Models\OrdersItem');
+        return $this->hasMany('App\Models\OrdersItem');
     }
 }
