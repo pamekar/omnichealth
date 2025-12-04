@@ -85,28 +85,24 @@ class FlutterwaveGateway implements PaymentGatewayInterface
      */
     public function verify(string $reference)
     {
-        // The SDK callback method handles verification.
-        // It returns data about the transaction.
+        // Flutterwave verify endpoint typically requires the transaction ID, not the tx_ref.
+        // The redirect URL usually contains 'transaction_id' and 'tx_ref'.
+        // We should prefer 'transaction_id' if available in the request.
         
-        // We construct a simulated request array for the callback method if needed,
-        // or just pass the reference if the library allows simple verification.
-        
-        // The SDK's callback method: $controller->callback($request);
-        // It usually echoes the result or returns it.
-        
-        // Let's use the Verify Transaction endpoint directly via the client if the controller is too coupled to HTTP output.
-        // However, the instructions say usage: $controller->callback($request);
-        
-        $request = request()->all();
-        if (!isset($request['tx_ref'])) {
-            $request['tx_ref'] = $reference;
+        $transactionId = request()->query('transaction_id');
+
+        if (!$transactionId) {
+             // If we don't have the transaction ID, we might have a problem as verify() expects it.
+             // We could try to use the reference if the library supports lookup by ref, 
+             // but standard v3 verify takes ID. 
+             // For now, let's assume if it's not in the query, we can't easily verify without an extra lookup call.
+             // But we will try to pass the reference just in case the wrapper handles it, 
+             // though the error suggests otherwise.
+             $transactionId = $reference; 
         }
         
-        // callback() in the SDK might print output. We need to capture it or use a lower level method.
-        // Looking at SDK source is ideal, but assuming standard behavior:
-        
         $transaction = new \Flutterwave\Service\Transactions();
-        $response = $transaction->verify($reference);
+        $response = $transaction->verify($transactionId);
         
         return (array) $response;
     }
