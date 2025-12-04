@@ -35,4 +35,22 @@ return [
         ],
     ],
 
+    'payment' => [
+        'default' => env('PAYMENT_DRIVER', 'paystack'), // 'paystack' or 'flutterwave'
+        
+        'paystack' => [
+            'public_key' => env('PAYSTACK_PUBLIC_KEY'),
+            'secret_key' => env('PAYSTACK_SECRET_KEY'),
+            // Paystack specific config if needed, Binkode facade often reads from .env directly.
+        ],
+
+        'flutterwave' => [
+            'public_key' => env('FLW_PUBLIC_KEY'),
+            'secret_key' => env('FLW_SECRET_KEY'),
+            'encryption_key' => env('FLW_ENCRYPTION_KEY'),
+            'env' => env('FLW_ENV', 'staging'), // 'staging' or 'production'
+            // Flutterwave specific config
+        ],
+    ],
+
 ];
