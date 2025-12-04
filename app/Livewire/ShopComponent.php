@@ -35,8 +35,8 @@ class ShopComponent extends Component
 
         if ($this->search) {
             $query->where(function($q) {
-                $q->where('name', 'like', '%' . $this->search . '%')
-                  ->orWhere('description', 'like', '%' . $this->search . '%');
+                $q->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($this->search) . '%'])
+                  ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($this->search) . '%']);
             });
         }
 
@@ -49,10 +49,10 @@ class ShopComponent extends Component
         $query->where('is_activated', true);
 
         $products = $query->paginate(12);
-        
+
         // Fetch categories that actually have products or just all.
         // Using fully qualified name as per Product model
-        $categories = Category::all(); 
+        $categories = Category::all();
 
         return view('livewire.shop-component', [
             'products' => $products,

@@ -9,11 +9,11 @@
             <!-- Filters -->
             <div class="filters-wrapper" style="margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: space-between;">
                 <div class="search-container" style="flex: 1; min-width: 250px;">
-                    <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search products..." 
+                    <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search products..."
                            style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px;">
                 </div>
                 <div class="category-container" style="flex: 0 0 250px;">
-                    <select wire:model.live="selectedCategory" 
+                    <select wire:model.live="selectedCategory"
                             style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px;">
                         <option value="">All Categories</option>
                         @foreach($categories as $cat)
@@ -65,7 +65,7 @@
                 @endforelse
             </div>
              <div class="pagination-container" style="margin-top: 2rem;">
-                 {{ $products->links() }}
+                 {{ $products->links('pagination::default')  }}
             </div>
         </div>
     </section>
