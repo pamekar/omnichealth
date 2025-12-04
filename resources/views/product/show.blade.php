@@ -3,34 +3,34 @@
 @section('title', $product->name . ' - OMNIC Medical Store')
 
 @push('seo')
-    <meta name="description" content="{{ $product->about ?? Str::limit(strip_tags($product->description), 160) }}">
+    <meta name="description" content="{{ $product->about ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 160) }}">
     <meta name="keywords" content="{{ $product->keywords ?? $product->name }}">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="product">
     <meta property="og:url" content="{{ route('shop.show', $product->slug) }}">
     <meta property="og:title" content="{{ $product->name }}">
-    <meta property="og:description" content="{{ $product->about ?? Str::limit(strip_tags($product->description), 200) }}">
+    <meta property="og:description" content="{{ $product->about ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 200) }}">
     <meta property="og:image" content="{{ $product->getMedia('feature_image')->first()?->getUrl() }}">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ route('shop.show', $product->slug) }}">
     <meta property="twitter:title" content="{{ $product->name }}">
-    <meta property="twitter:description" content="{{ $product->about ?? Str::limit(strip_tags($product->description), 200) }}">
+    <meta property="twitter:description" content="{{ $product->about ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 200) }}">
     <meta property="twitter:image" content="{{ $product->getMedia('feature_image')->first()?->getUrl() }}">
 
     <!-- Product Schema -->
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org/",
-        "@type": "Product",
+        "@@context": "https://schema.org/",
+        "@@type": "Product",
         "name": "{{ $product->name }}",
         "image": "{{ $product->getMedia('feature_image')->first()?->getUrl() }}",
-        "description": "{{ $product->about ?? Str::limit(strip_tags($product->description), 200) }}",
+        "description": "{{ $product->about ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 200) }}",
         "sku": "{{ $product->sku }}",
         "offers": {
-            "@type": "Offer",
+            "@@type": "Offer",
             "url": "{{ route('shop.show', $product->slug) }}",
             "priceCurrency": "NGN",
             "price": "{{ $product->price }}",
