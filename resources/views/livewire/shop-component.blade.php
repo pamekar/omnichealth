@@ -33,7 +33,7 @@
                     <div class="product-card">
                         <a href="{{ route('shop.show', $product->slug) }}" class="product-image-container">
                             <img
-                                src="{{$product->getMedia('feature_image')->first()?->getUrl()??'https://placehold.co/600x400/007bff/white?text='. urlencode($product->name)}}"
+                                src="{{$product->displayImage()??'https://placehold.co/600x400/007bff/white?text='. urlencode($product->name)}}"
                                 alt="{{ $product->name }}">
                         </a>
                         <div class="product-content">

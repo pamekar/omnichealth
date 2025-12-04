@@ -95,7 +95,14 @@ class Product extends Model implements HasMedia
         return $this->belongsToMany('App\Models\Product', 'product_has_collection', 'collection_id');
     }
 
+    public function displayImage(){
+        $image = $this->getMedia('feature_image')->first();
 
+        if(empty($image)){
+            $image = $this->getMedia()->first();
+        }
+        return $image?->getUrl();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

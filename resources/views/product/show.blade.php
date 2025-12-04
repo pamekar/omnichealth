@@ -5,20 +5,20 @@
 @push('seo')
     <meta name="description" content="{{ $product->about ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 160) }}">
     <meta name="keywords" content="{{ $product->keywords ?? $product->name }}">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="product">
     <meta property="og:url" content="{{ route('shop.show', $product->slug) }}">
     <meta property="og:title" content="{{ $product->name }}">
     <meta property="og:description" content="{{ $product->about ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 200) }}">
-    <meta property="og:image" content="{{ $product->getMedia('feature_image')->first()?->getUrl() }}">
-    
+    <meta property="og:image" content="{{ $product->displayImage() }}">
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ route('shop.show', $product->slug) }}">
     <meta property="twitter:title" content="{{ $product->name }}">
     <meta property="twitter:description" content="{{ $product->about ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 200) }}">
-    <meta property="twitter:image" content="{{ $product->getMedia('feature_image')->first()?->getUrl() }}">
+    <meta property="twitter:image" content="{{ $product->displayImage() }}">
 
     <!-- Product Schema -->
     <script type="application/ld+json">
@@ -26,7 +26,7 @@
         "@@context": "https://schema.org/",
         "@@type": "Product",
         "name": "{{ $product->name }}",
-        "image": "{{ $product->getMedia('feature_image')->first()?->getUrl() }}",
+        "image": "{{ $product->displayImage() }}",
         "description": "{{ $product->about ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 200) }}",
         "sku": "{{ $product->sku }}",
         "offers": {
@@ -47,13 +47,13 @@
         <div class="product-detail-grid">
             <div class="product-image-gallery" data-aos="fade-right">
                 <div class="main-image">
-                    <img src="{{ $product->getMedia('feature_image')->first()?->getUrl() ?? 'https://placehold.co/600x600/007bff/white?text=' . urlencode($product->name) }}" alt="{{ $product->name }}">
+                    <img src="{{ $product->displayImage() ?? 'https://placehold.co/600x600/007bff/white?text=' . urlencode($product->name) }}" alt="{{ $product->name }}">
                 </div>
             </div>
 
             <div class="product-info" data-aos="fade-left">
                 <h1 class="product-title">{{ $product->name }}</h1>
-                
+
                 <div class="product-price-container">
                     @if($product->discount > 0)
                         <div class="price-wrapper">
@@ -81,7 +81,7 @@
                 <div class="product-description">
                     {!! $product->description !!}
                 </div>
-                
+
                 @if($product->details)
                 <div class="product-details mb-6 p-4 bg-gray-50 rounded-lg">
                     <h3 class="font-bold mb-2">Product Details</h3>
@@ -98,7 +98,7 @@
                         <input type="hidden" value="{{ $product->id }}" name="id">
                         <input type="hidden" value="{{ $product->name }}" name="name">
                         <input type="hidden" value="{{ $product->price }}" name="price">
-                        
+
                         <div class="quantity-control">
                             <label for="quantity">Quantity:</label>
                             <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ $product->max_cart > 0 ? $product->max_cart : 10 }}" class="form-input">
@@ -110,7 +110,7 @@
                     </form>
                 </div>
                 @endif
-                
+
                 <div class="product-meta">
                     @if($product->category)
                         <p><strong>Category:</strong> {{ $product->category->name }}</p>
@@ -155,19 +155,19 @@
         margin-bottom: 1.5rem;
         flex-wrap: wrap;
     }
-    
+
     .price-wrapper {
         display: flex;
         align-items: center;
         gap: 0.5rem;
     }
-    
+
     .original-price {
         text-decoration: line-through;
         color: #999;
         font-size: 1.1rem;
     }
-    
+
     .discount-badge {
         background: #ef4444;
         color: white;
@@ -182,7 +182,7 @@
         font-weight: 600;
         color: #007bff;
     }
-    
+
     .price.discounted {
         color: #dc2626;
     }
