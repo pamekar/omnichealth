@@ -87,7 +87,7 @@ class CheckoutController extends Controller
             ]);
 
             foreach (Cart::getContent() as $item) {
-                $order->items()->create([
+                $order->ordersItems()->create([
                     'product_id' => $item->id,
                     'qty' => $item->quantity,
                     'price' => $item->price,
