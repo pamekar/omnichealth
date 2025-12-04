@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Account;
 use App\Services\Payment\PaymentFactory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CheckoutController extends Controller
 {
@@ -59,18 +60,18 @@ class CheckoutController extends Controller
             // For now, we pass the raw amount and let the gateway standardize if needed.
             // But PaystackGateway implementation passes data directly to Paystack::getAuthorizationUrl
             // which expects Kobo if we pass 'amount'.
-            
-            // Standardizing: Let's pass 'amount' in Kobo/Cent to gateway initialize, 
+
+            // Standardizing: Let's pass 'amount' in Kobo/Cent to gateway initialize,
             // and let the specific gateway convert if it needs standard units.
             // OR pass standard units and let PaystackGateway multiply by 100.
-            
+
             // Let's modify PaystackGateway to multiply by 100 if we pass main unit.
             // Actually, for simplicity in refactoring, let's keep the logic here for now
             // or better, pass the main unit and let the gateway handle the specific currency requirement.
-            
-            // Update: PaystackGateway currently just passes $data. 
+
+            // Update: PaystackGateway currently just passes $data.
             // Let's pass the amount in Kobo to be safe for Paystack as it was before.
-            $paystackAmount = $amount * 100; 
+            $paystackAmount = $amount * 100;
 
             $order = Order::create([
                 'account_id' => $account->id,
@@ -89,6 +90,7 @@ class CheckoutController extends Controller
             foreach (Cart::getContent() as $item) {
                 $order->ordersItems()->create([
                     'product_id' => $item->id,
+                    'account_id' => $account->id,
                     'qty' => $item->quantity,
                     'price' => $item->price,
                     'total' => $item->price * $item->quantity,
@@ -109,15 +111,16 @@ class CheckoutController extends Controller
                 'phone_number' => $request->phone,    // Added for Flutterwave
                 'tx_ref' => $reference,               // Flutterwave uses tx_ref
             ];
-            
+
             // Fix for Flutterwave expecting 'amount' in main unit (Naira) vs Paystack (Kobo).
             // This suggests we should really move the data preparation into the Gateway classes.
             // But to avoid over-engineering right now, we will handle it in the Gateway classes or passed data.
-            // We passed 'amount' as kobo. 
-            
+            // We passed 'amount' as kobo.
+
             return $gateway->initialize($data);
 
         } catch (\Exception $e) {
+            Log::info($e->getMessage(), $e->getTrace());
             return redirect()->route('checkout.error')->with('error', $e->getMessage());
         }
     }
@@ -136,10 +139,10 @@ class CheckoutController extends Controller
             }
 
             $paymentDetails = $gateway->verify($reference);
-            
+
             // Normalize status check
             $isSuccessful = false;
-            
+
             if ($driver === 'paystack') {
                 if ($paymentDetails['status'] && $paymentDetails['data']['status'] === 'success') {
                     $isSuccessful = true;
