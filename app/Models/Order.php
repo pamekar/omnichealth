@@ -264,4 +264,11 @@ class Order extends Model
     {
         return $this->hasMany('App\Models\OrdersItem');
     }
+
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            $model->uuid = \Illuminate\Support\Str::uuid();
+        });
+    }
 }

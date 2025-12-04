@@ -4,7 +4,7 @@ use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
-use TomatoPHP\FilamentEcommerce\Models\Product;
+use App\Models\Product;
 
 Route::get('/', function () {
     $products = Product::where('is_trend', true)->paginate(12);

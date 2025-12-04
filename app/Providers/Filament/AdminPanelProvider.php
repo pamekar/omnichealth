@@ -18,7 +18,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use App\FilamentEcommercePlugin;
+use TomatoPHP\FilamentEcommerce\FilamentEcommercePlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -55,7 +55,16 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 SpatieLaravelTranslatablePlugin::make()->defaultLocales(['en']),
-            ])
+            ])->plugin(
+                FilamentEcommercePlugin::make()
+                ->useOrder(false)
+                ->useCoupon(false)
+                ->useGiftCard(false)
+                ->useReferralCode(false)
+                ->allowOrderExport(false)
+                ->allowOrderImport(false)
+                ->useWidgets(false)
+            )
             ->authMiddleware([
                 Authenticate::class,
             ]);
