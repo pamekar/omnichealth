@@ -46,6 +46,16 @@ class FlutterwaveGateway implements PaymentGatewayInterface
         if (!isset($data['redirect_url'])) {
             $data['redirect_url'] = $data['callback_url'] ?? route('checkout.success');
         }
+        
+        // Ensure payment options are set
+        if (!isset($data['payment_options'])) {
+            $data['payment_options'] = 'card, ussd, banktransfer';
+        }
+
+        // Some SDK versions might look for 'payment_method' or use it for specific flows
+        if (!isset($data['payment_method'])) {
+            $data['payment_method'] = 'card';
+        }
 
         // Convert amount from Kobo to Naira if necessary
         // Assuming the controller sends Kobo (multiplied by 100)
