@@ -33,13 +33,18 @@ class FlutterwaveGateway implements PaymentGatewayInterface
      */
     public function initialize(array $data)
     {
-        // Add success_url and failure_url if not present
+        // Add success_url, failure_url and redirect_url if not present (Flutterwave might use one or all)
         if (!isset($data['success_url'])) {
             $data['success_url'] = route('checkout.success'); 
         }
 
         if (!isset($data['failure_url'])) {
              $data['failure_url'] = route('checkout.error');
+        }
+
+        // The SDK's PaymentController often uses 'redirect_url' in its internal processing
+        if (!isset($data['redirect_url'])) {
+            $data['redirect_url'] = $data['callback_url'] ?? route('checkout.success');
         }
 
         // Convert amount from Kobo to Naira if necessary
