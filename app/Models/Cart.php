@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Product $product
  */
 
-class Cart extends Model
+class Cart extends \TomatoPHP\FilamentEcommerce\Models\Cart
 {
     /**
      * @var array
@@ -35,6 +35,20 @@ class Cart extends Model
         "is_active" => "boolean",
         "options" => "json"
     ];
+
+    /**
+     * Get the content of the cart for the current user or session.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function getContent()
+    {
+        $query = auth()->check()
+            ? self::where('account_id', auth()->user()->id)
+            : self::where('session_id', session()->getId());
+
+        return $query->with('product')->get();
+    }
 
     /**
      * Get the total quantity of items in the cart for the current user or session.
@@ -65,7 +79,21 @@ class Cart extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Clear the cart for the current user or session.
+     *
+     * @return void
+     */
+    public static function clear()
+    {
+        $query = auth()->check()
+            ? self::where('account_id', auth()->user()->id)
+            : self::where('session_id', session()->getId());
+
+        $query->delete();
+    }
+
+    /**
+     * @return \\Illuminate\\Database\\Eloquent\\Relations\\BelongsTo
      */
     public function account()
     {
@@ -73,7 +101,7 @@ class Cart extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \\Illuminate\\Database\\Eloquent\\Relations\\BelongsTo
      */
     public function product()
     {
