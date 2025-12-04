@@ -12,6 +12,7 @@ Route::get('/', function () {
 });
 
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+Route::get('/product/{slug}', [ShopController::class, 'show'])->name('shop.show');
 Route::get('/about', [ShopController::class, 'about'])->name('shop.about');
 Route::get('/privacy', [ShopController::class, 'privacy'])->name('shop.privacy');
 

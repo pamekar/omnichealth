@@ -9,8 +9,13 @@ class ShopController extends Controller
 {
     public function index()
     {
-        $products = Product::paginate(12);
-        return view('shop', compact('products'));
+        return view('shop');
+    }
+
+    public function show($slug)
+    {
+        $product = Product::where('slug', $slug)->firstOrFail();
+        return view('product.show', compact('product'));
     }
 
     public function about()
