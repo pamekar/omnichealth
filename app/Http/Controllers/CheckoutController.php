@@ -84,7 +84,7 @@ class CheckoutController extends Controller
                 'status' => 'pending',
                 'payment_method' => $driver,
                 'payment_status' => 'pending',
-                'payment_vendor_id' => $reference,
+                'transaction_id' => $reference,
             ]);
 
             foreach (Cart::getContent() as $item) {
@@ -154,7 +154,7 @@ class CheckoutController extends Controller
             }
 
             if ($isSuccessful) {
-                $order = Order::where('payment_vendor_id', $reference)->first();
+                $order = Order::where('transaction_id', $reference)->first();
                 if ($order) {
                     $order->update([
                         'payment_status' => 'paid',

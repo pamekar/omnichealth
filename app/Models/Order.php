@@ -112,6 +112,7 @@ class Order extends Model
         'payment_method',
         'payment_vendor',
         'payment_vendor_id',
+        'transaction_id',
         'created_at',
         'updated_at'
     ];
