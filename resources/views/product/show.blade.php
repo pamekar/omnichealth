@@ -2,6 +2,45 @@
 
 @section('title', $product->name . ' - OMNIC Medical Store')
 
+@push('seo')
+    <meta name="description" content="{{ $product->about ?? Str::limit(strip_tags($product->description), 160) }}">
+    <meta name="keywords" content="{{ $product->keywords ?? $product->name }}">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="product">
+    <meta property="og:url" content="{{ route('shop.show', $product->slug) }}">
+    <meta property="og:title" content="{{ $product->name }}">
+    <meta property="og:description" content="{{ $product->about ?? Str::limit(strip_tags($product->description), 200) }}">
+    <meta property="og:image" content="{{ $product->getMedia('feature_image')->first()?->getUrl() }}">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ route('shop.show', $product->slug) }}">
+    <meta property="twitter:title" content="{{ $product->name }}">
+    <meta property="twitter:description" content="{{ $product->about ?? Str::limit(strip_tags($product->description), 200) }}">
+    <meta property="twitter:image" content="{{ $product->getMedia('feature_image')->first()?->getUrl() }}">
+
+    <!-- Product Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": "{{ $product->name }}",
+        "image": "{{ $product->getMedia('feature_image')->first()?->getUrl() }}",
+        "description": "{{ $product->about ?? Str::limit(strip_tags($product->description), 200) }}",
+        "sku": "{{ $product->sku }}",
+        "offers": {
+            "@type": "Offer",
+            "url": "{{ route('shop.show', $product->slug) }}",
+            "priceCurrency": "NGN",
+            "price": "{{ $product->price }}",
+            "priceValidUntil": "{{ now()->addYear()->toIso8601String() }}",
+            "availability": "{{ $product->is_in_stock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock' }}"
+        }
+    }
+    </script>
+@endpush
+
 @section('content')
 <div class="product-detail-page section">
     <div class="container">
@@ -14,8 +53,18 @@
 
             <div class="product-info" data-aos="fade-left">
                 <h1 class="product-title">{{ $product->name }}</h1>
+                
                 <div class="product-price-container">
-                    <span class="price">₦{{ number_format($product->price, 2) }}</span>
+                    @if($product->discount > 0)
+                        <div class="price-wrapper">
+                            <span class="original-price">₦{{ number_format($product->price, 2) }}</span>
+                            <span class="price discounted">₦{{ number_format($product->price - ($product->price * ($product->discount / 100)), 2) }}</span>
+                            <span class="discount-badge">-{{ $product->discount }}%</span>
+                        </div>
+                    @else
+                        <span class="price">₦{{ number_format($product->price, 2) }}</span>
+                    @endif
+
                     @if($product->is_in_stock)
                         <span class="stock-badge in-stock">In Stock</span>
                     @else
@@ -23,9 +72,24 @@
                     @endif
                 </div>
 
+                @if($product->about)
+                <div class="product-about">
+                    <p class="text-gray-600 italic mb-4">{{ $product->about }}</p>
+                </div>
+                @endif
+
                 <div class="product-description">
                     {!! $product->description !!}
                 </div>
+                
+                @if($product->details)
+                <div class="product-details mb-6 p-4 bg-gray-50 rounded-lg">
+                    <h3 class="font-bold mb-2">Product Details</h3>
+                    <div class="prose prose-sm">
+                        {!! $product->details !!}
+                    </div>
+                </div>
+                @endif
 
                 @if($product->is_in_stock)
                 <div class="add-to-cart-section">
@@ -37,7 +101,7 @@
                         
                         <div class="quantity-control">
                             <label for="quantity">Quantity:</label>
-                            <input type="number" id="quantity" name="quantity" value="1" min="1" max="10" class="form-input">
+                            <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ $product->max_cart > 0 ? $product->max_cart : 10 }}" class="form-input">
                         </div>
 
                         <button type="submit" class="add-to-cart-btn-large">
@@ -53,6 +117,9 @@
                     @endif
                     @if($product->sku)
                         <p><strong>SKU:</strong> {{ $product->sku }}</p>
+                    @endif
+                    @if($product->barcode)
+                        <p><strong>Barcode:</strong> {{ $product->barcode }}</p>
                     @endif
                 </div>
             </div>
@@ -86,12 +153,38 @@
         align-items: center;
         gap: 1rem;
         margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .price-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .original-price {
+        text-decoration: line-through;
+        color: #999;
+        font-size: 1.1rem;
+    }
+    
+    .discount-badge {
+        background: #ef4444;
+        color: white;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
     }
 
     .price {
         font-size: 1.5rem;
         font-weight: 600;
         color: #007bff;
+    }
+    
+    .price.discounted {
+        color: #dc2626;
     }
 
     .stock-badge {
