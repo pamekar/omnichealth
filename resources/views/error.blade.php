@@ -14,7 +14,7 @@
                 @if(session('error'))
                     {{ session('error') }}
                 @else
-                    There was an error processing your payment. Please try again.
+                    There was an error processing your request. Please try again.
                 @endif
             </p>
             <a href="{{ route('checkout.index') }}" class="mt-8 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
