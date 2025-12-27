@@ -53,7 +53,7 @@
                  x-transition:enter-start="opacity-0 transform translate-y-2 scale-95"
                  x-transition:enter-end="opacity-100 transform translate-y-0 scale-100"
                  x-transition:leave="transition ease-in duration-200"
-                 x-transition:leave-start="opacity-100 scale-100".
+                 x-transition:leave-start="opacity-100 scale-100"
                  x-transition:leave-end="opacity-0 scale-95"
                  :style="{
                     'background-color': n.type === 'success' ? '#d1e7dd' : (n.type === 'error' ? '#f8d7da' : '#cff4fc'),
