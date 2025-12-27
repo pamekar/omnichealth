@@ -14,26 +14,27 @@
         <div class="flex justify-between xl:gap-60 lg:gap-48 md:gap-16 sm:gap-8 sm:flex-row flex-col gap-4">
             <div class="w-full">
                 <div class=" my-4">
-                    <img src="{{$this->getRecord()->company?->getFirstMediaUrl('logo')}}" alt="{{$this->getRecord()->company->name}}" class="h-12 ">
+                    <img src="{{$this->getRecord()->company?->getFirstMediaUrl('logo')}}"
+                         alt="{{$this->getRecord()->company?->name}}" class="h-12 ">
                 </div>
                 <div class="flex flex-col">
                     <div>
                         {{trans('filament-ecommerce::messages.orders.print.from')}}
                     </div>
                     <div class="text-lg font-bold mt-2">
-                        {{$this->getRecord()->company->name}}
+                        {{$this->getRecord()->company?->name}}
                     </div>
                     <div class="text-sm">
-                        {{$this->getRecord()->company->ceo}}
+                        {{$this->getRecord()->company?->ceo}}
                     </div>
                     <div class="text-sm">
-                        {{$this->getRecord()->company->address}}
+                        {{$this->getRecord()->company?->address}}
                     </div>
                     <div class="text-sm">
-                        {{$this->getRecord()->company->zip}} {{$this->getRecord()->company->city}}
+                        {{$this->getRecord()->company?->zip}} {{$this->getRecord()->company?->city}}
                     </div>
                     <div class="text-sm">
-                        {{$this->getRecord()->company->country?->name}}
+                        {{$this->getRecord()->company?->country?->name}}
                     </div>
                 </div>
                 <div class="mt-4">
@@ -53,9 +54,12 @@
                         <div class="text-sm">
                             {{$this->getRecord()->address}}
                         </div>
-                        <div class="text-sm">
-                            {{$this->getRecord()->country?->name}} , {{$this->getRecord()->city?->name}}, {{$this->getRecord()->area?->name}}
-                        </div>
+                        @if(isset($this->getRecord()->country->name, $this->getRecord()->city->name, $this->getRecord()->area->name))
+                            <div class="text-sm">
+                                {{$this->getRecord()->country?->name}} , {{$this->getRecord()->city?->name}}
+                                , {{$this->getRecord()->area?->name}}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -102,59 +106,43 @@
                 </div>
             </div>
         </div>
-        <div>
-            <div class="grid grid-cols-12 gap-4 border-b dark:border-gray-700 py-4 my-4 font-bold">
-                <div class="col-span-4 ">
-                    {{trans('filament-ecommerce::messages.orders.print.item')}}
-                </div>
-                <div>
-                    {{trans('filament-ecommerce::messages.orders.print.price')}}
-                </div>
-                <div>
-                    {{trans('filament-ecommerce::messages.orders.print.discount')}}
-                </div>
-                <div class="col-span-2">
-                    {{trans('filament-ecommerce::messages.orders.print.vat')}}
-                </div>
-                <div>
-                    {{trans('filament-ecommerce::messages.orders.print.qty')}}
-                </div>
-                <div>
-                    {{trans('filament-ecommerce::messages.orders.print.total')}}
-                </div>
-            </div>
-            <div class="flex flex-col gap-4">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead>
+                <tr class="border-b dark:border-gray-700 font-bold">
+                    <th class="py-4 pr-4">{{trans('filament-ecommerce::messages.orders.print.item')}}</th>
+                    @if(config('filament-ecommerce.enable_pricing'))
+                        <th class="py-4 px-4">{{trans('filament-ecommerce::messages.orders.print.price')}}</th>
+                        <th class="py-4 px-4">{{trans('filament-ecommerce::messages.orders.print.discount')}}</th>
+                        <th class="py-4 px-4">{{trans('filament-ecommerce::messages.orders.print.vat')}}</th>
+                    @endif
+                    <th class="py-4 px-4 text-center">{{trans('filament-ecommerce::messages.orders.print.qty')}}</th>
+                    @if(config('filament-ecommerce.enable_pricing'))
+                        <th class="py-4 pl-4 text-right">{{trans('filament-ecommerce::messages.orders.print.total')}}</th>
+                    @endif
+                </tr>
+                </thead>
+                <tbody>
                 @foreach($this->getRecord()->ordersItems as $item)
-                    <div class="grid grid-cols-12 gap-4 border-b dark:border-gray-700 py-4">
-                        <div class="col-span-4 flex  flex-col justify-start">
-                            <div>
-                                {{ $item->product?->name }}
-                            </div>
-{{--                            <div class="text-gray-400">--}}
-{{--                                @foreach($item->options as $label=>$options)--}}
-{{--                                    <span>{{  str($label)->ucfirst() }}</span> : {{$options}} <br>--}}
-{{--                                @endforeach--}}
-{{--                            </div>--}}
-                        </div>
-                        <div>
-                            {!! dollar($item->price) !!}
-                        </div>
-                        <div>
-                            {!! dollar($item->discount) !!}
-                        </div>
-                        <div class="col-span-2">
-                            {!! dollar($item->tax) !!}
-                        </div>
-                        <div>
-                            {{$item->qty}}
-                        </div>
-                        <div>
-                            {!! dollar($item->total) !!}
-                        </div>
-                    </div>
+                    <tr class="border-b dark:border-gray-700">
+                        <td class="py-4 pr-4">
+                            {{ $item->product?->name }}
+                        </td>
+                        @if(config('filament-ecommerce.enable_pricing'))
+                            <td class="py-4 px-4">{!! dollar($item->price) !!}</td>
+                            <td class="py-4 px-4">{!! dollar($item->discount) !!}</td>
+                            <td class="py-4 px-4">{!! dollar($item->tax) !!}</td>
+                        @endif
+                        <td class="py-4 px-4 text-center">{{$item->qty}}</td>
+                        @if(config('filament-ecommerce.enable_pricing'))
+                            <td class="py-4 pl-4 text-right">{!! dollar($item->total) !!}</td>
+                        @endif
+                    </tr>
                 @endforeach
-
-            </div>
+                </tbody>
+            </table>
+        </div>
+        @if(config('filament-ecommerce.enable_pricing'))
             <div class="flex flex-col gap-4 mt-4">
                 <div class="flex justify-between gap-4 py-4 border-b dark:border-gray-700">
                     <div class="font-bold">
@@ -165,29 +153,30 @@
                     </div>
                 </div>
                 @if($this->getRecord()->vat)
-                <div class="flex justify-between gap-4 py-4 border-b dark:border-gray-700 text-success-500">
-                    <div class="font-bold">
-                        {{trans('filament-ecommerce::messages.orders.print.vat')}}
+                    <div class="flex justify-between gap-4 py-4 border-b dark:border-gray-700 text-success-500">
+                        <div class="font-bold">
+                            {{trans('filament-ecommerce::messages.orders.print.vat')}}
+                        </div>
+                        <div>
+                            {!! dollar($this->getRecord()->vat ) !!}
+                        </div>
                     </div>
-                    <div>
-                        {!! dollar($this->getRecord()->vat ) !!}
-                    </div>
-                </div>
                 @endif
                 @if($this->getRecord()->shipping)
-                <div class="flex justify-between gap-4 py-4 border-b dark:border-gray-700 text-success-500">
-                    <div class="font-bold">
-                        {{trans('filament-ecommerce::messages.orders.print.shipping')}}
+                    <div class="flex justify-between gap-4 py-4 border-b dark:border-gray-700 text-success-500">
+                        <div class="font-bold">
+                            {{trans('filament-ecommerce::messages.orders.print.shipping')}}
+                        </div>
+                        <div>
+                            {!! dollar($this->getRecord()->shipping ) !!}
+                        </div>
                     </div>
-                    <div>
-                        {!! dollar($this->getRecord()->shipping ) !!}
-                    </div>
-                </div>
                 @endif
                 @if($this->getRecord()->coupon)
                     <div class="flex justify-between gap-4 py-4 border-b dark:border-gray-700 text-danger-500">
                         <div class="font-bold">
-                            {{trans('filament-ecommerce::messages.orders.print.coupon')}} [{{ $this->getRecord()->coupon->code }}]
+                            {{trans('filament-ecommerce::messages.orders.print.coupon')}}
+                            [{{ $this->getRecord()->coupon->code }}]
                         </div>
                         <div>
                             {!! dollar($this->getRecord()->coupon->discount($this->getRecord()->total) ) !!}
@@ -195,18 +184,18 @@
                     </div>
                 @endif
                 @if($this->getRecord()->discount)
-                <div class="flex justify-between gap-4 py-4 border-b dark:border-gray-700 text-danger-500">
-                    <div class="font-bold">
-                        {{trans('filament-ecommerce::messages.orders.print.discount')}}
+                    <div class="flex justify-between gap-4 py-4 border-b dark:border-gray-700 text-danger-500">
+                        <div class="font-bold">
+                            {{trans('filament-ecommerce::messages.orders.print.discount')}}
+                        </div>
+                        <div>
+                            @if($this->getRecord()->coupon)
+                                {!! dollar($this->getRecord()->discount - $this->getRecord()->coupon->discount($this->getRecord()->total)) !!}
+                            @else
+                                {!! dollar($this->getRecord()->discount ) !!}
+                            @endif
+                        </div>
                     </div>
-                    <div>
-                        @if($this->getRecord()->coupon)
-                            {!! dollar($this->getRecord()->discount - $this->getRecord()->coupon->discount($this->getRecord()->total)) !!}
-                        @else
-                            {!! dollar($this->getRecord()->discount ) !!}
-                        @endif
-                    </div>
-                </div>
                 @endif
                 <div class="flex justify-between gap-4 py-4 text-primary-500">
                     <div class="font-bold">
@@ -216,18 +205,18 @@
                         {!! dollar($this->getRecord()->total) !!}
                     </div>
                 </div>
-                @if($this->getRecord()->notes)
-                    <div class="flex flex-col gap-4 py-4 text-gray-800">
-                        <div class="font-bold">
-                            {{trans('filament-ecommerce::messages.orders.print.notes')}}
-                        </div>
-                        <div>
-                            {{ $this->getRecord()->notes }}
-                        </div>
-                    </div>
-                @endif
             </div>
-        </div>
+        @endif
+        @if($this->getRecord()->notes)
+            <div class="flex flex-col gap-4 mt-4 py-4 text-gray-800">
+                <div class="font-bold">
+                    {{trans('filament-ecommerce::messages.orders.print.notes')}}
+                </div>
+                <div>
+                    {{ $this->getRecord()->notes }}
+                </div>
+            </div>
+        @endif
     </x-filament::section>
 
     @if (count($relationManagers))

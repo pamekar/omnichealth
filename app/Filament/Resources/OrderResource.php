@@ -37,6 +37,9 @@ use TomatoPHP\FilamentLocations\Models\City;
 use TomatoPHP\FilamentLocations\Models\Country;
 use TomatoPHP\FilamentTypes\Components\TypeColumn;
 use TomatoPHP\FilamentTypes\Models\Type;
+use App\Mail\SendQuote;
+use Illuminate\Support\Facades\Mail;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderResource extends Resource
 {
@@ -722,8 +725,84 @@ class OrderResource extends Resource
                 Tables\Actions\Action::make('print')
                     ->tooltip(trans('filament-ecommerce::messages.orders.actions.print'))
                     ->icon('heroicon-s-printer')
+                    ->hidden(fn() => !config('filament-ecommerce.enable_pricing'))
                     ->openUrlInNewTab()
                     ->url(fn($record) => route('order.print', $record->id))
+                    ->iconButton(),
+                Tables\Actions\Action::make('send_quote')
+                    ->tooltip('Send Quote')
+                    ->icon('heroicon-s-paper-airplane')
+                    ->hidden(fn() => config('filament-ecommerce.enable_pricing'))
+                    ->form([
+                        Forms\Components\Repeater::make('items')
+                            ->hiddenLabel()
+                            ->schema([
+                                Forms\Components\Hidden::make('id'),
+                                Forms\Components\TextInput::make('product_name')
+                                    ->label('Product')
+                                    ->disabled(),
+                                Forms\Components\TextInput::make('qty')
+                                    ->label('Qty')
+                                    ->disabled()
+                                    ->numeric(),
+                                Forms\Components\TextInput::make('price')
+                                    ->label('Price')
+                                    ->required()
+                                    ->numeric(),
+                            ])
+                            ->addable(false)
+                            ->deletable(false)
+                            ->reorderable(false)
+                            ->columns(3)
+                    ])
+                    ->fillForm(fn($record) => [
+                        'items' => $record->ordersItems->map(fn($item) => [
+                            'id' => $item->id,
+                            'product_name' => $item->product->name ?? 'Unknown Product',
+                            'qty' => $item->qty,
+                            'price' => $item->price,
+                        ])->toArray()
+                    ])
+                    ->action(function($record, array $data){
+                        $total = 0;
+                        foreach($data['items'] as $itemData) {
+                            $item = \App\Models\OrdersItem::find($itemData['id']);
+                            if ($item) {
+                                $price = floatval($itemData['price']);
+                                $totalItem = $price * $item->qty;
+                                $item->update([
+                                    'price' => $price,
+                                    'total' => $totalItem,
+                                ]);
+                                $total += $totalItem;
+                            }
+                        }
+                        
+                        $record->update([
+                            'total' => $total,
+                            'status' => 'prepared',
+                        ]);
+
+                        $pdf = Pdf::loadView('pdf.order', ['order' => $record]);
+
+                        $recipient = $record->email ?? ($record->account ? $record->account->email : null);
+
+                        if ($recipient) {
+                             Mail::to($recipient)->send(new SendQuote($record, $pdf));
+                             
+                             Notification::make()
+                                ->title('Quote Sent')
+                                ->body('The quote has been sent to ' . $recipient)
+                                ->success()
+                                ->send();
+                        } else {
+                             Notification::make()
+                                ->title('Error')
+                                ->body('Customer email not found.')
+                                ->danger()
+                                ->send();
+                        }
+                    })
                     ->iconButton(),
                 Tables\Actions\ViewAction::make()
                     ->tooltip(trans('filament-ecommerce::messages.orders.actions.show'))
