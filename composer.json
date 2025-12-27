@@ -7,6 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "barryvdh/laravel-dompdf": "^3.1",
         "binkode/laravel-paystack": "^1.4",
         "filament/filament": "^3.2",
         "flutterwavedev/flutterwave-v3": "^1.1",
