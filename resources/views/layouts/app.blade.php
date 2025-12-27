@@ -19,13 +19,13 @@
         <nav class="main-nav">
             <a href="/" class="logo">OMNIC</a>
             <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="{{ route('shop.index') }}">Shop</a></li>
-                <li><a href="{{ route('shop.about') }}">About</a></li>
+                <li><a href="/" wire:navigate>Home</a></li>
+                <li><a href="{{ route('shop.index') }}" wire:navigate>Shop</a></li>
+                <li><a href="{{ route('shop.about') }}" wire:navigate>About</a></li>
             </ul>
-            <a href="{{ route('cart.list') }}" class="cart-link">
+            <a href="{{ route('cart.list') }}" wire:navigate class="cart-link">
                 <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count">{{ \App\Models\Cart::getTotalQuantity() }}</span>
+                @livewire('cart-count')
             </a>
         </nav>
     </header>
@@ -33,6 +33,41 @@
     <main>
         @yield('content')
     </main>
+
+    <!-- Toast Notification Container -->
+    <div x-data="{ 
+            notifications: [], 
+            add(message, type = 'success') {
+                const id = Date.now();
+                this.notifications.push({ id, message, type });
+                setTimeout(() => {
+                    this.notifications = this.notifications.filter(n => n.id !== id);
+                }, 3000);
+            } 
+        }" 
+        @notify.window="add($event.detail.message, $event.detail.type)"
+        class="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"
+        style="max-width: 300px;">
+        <template x-for="n in notifications" :key="n.id">
+            <div x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 transform translate-x-8"
+                 x-transition:enter-end="opacity-100 transform translate-x-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 transform translate-x-0"
+                 x-transition:leave-end="opacity-0 transform translate-x-8"
+                 :class="{
+                    'bg-green-600': n.type === 'success',
+                    'bg-red-600': n.type === 'error',
+                    'bg-blue-600': n.type === 'info'
+                 }"
+                 class="pointer-events-auto px-4 py-3 rounded-lg shadow-lg text-white flex items-center justify-between min-w-[200px]">
+                <span x-text="n.message" class="text-sm font-medium"></span>
+                <button @click="notifications = notifications.filter(notif => notif.id !== n.id)" class="ml-4 text-white opacity-70 hover:opacity-100">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </template>
+    </div>
 
     <footer class="main-footer">
         <div class="footer-content">

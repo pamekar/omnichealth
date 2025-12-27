@@ -31,14 +31,14 @@
             <div class="product-grid" wire:loading.class.opacity="0.5" style="transition: opacity 0.3s;">
                  @forelse ($products as $product)
                     <div class="product-card">
-                        <a href="{{ route('shop.show', $product->slug) }}" class="product-image-container">
+                        <a href="{{ route('shop.show', $product->slug) }}" wire:navigate class="product-image-container">
                             <img
                                 src="{{$product->displayImage()??'https://placehold.co/600x400/007bff/white?text='. urlencode($product->name)}}"
                                 alt="{{ $product->name }}">
                         </a>
                         <div class="product-content">
                             <h3 class="product-name">
-                                <a href="{{ route('shop.show', $product->slug) }}" style="color: inherit; text-decoration: none;">
+                                <a href="{{ route('shop.show', $product->slug) }}" wire:navigate style="color: inherit; text-decoration: none;">
                                     {{ $product->name }}
                                 </a>
                             </h3>
@@ -47,16 +47,7 @@
                                 @if(config('filament-ecommerce.enable_pricing'))
                                     <span class="product-price">₦{{ number_format($product->price, 2) }}</span>
                                 @endif
-                                <form action="{{ route('cart.store') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" value="{{ $product->id }}" name="id">
-                                    <input type="hidden" value="{{ $product->name }}" name="name">
-                                    <input type="hidden" value="{{ $product->price }}" name="price">
-                                    <input type="hidden" value="1" name="quantity">
-                                    <button type="submit" class="add-to-cart-btn" aria-label="Add to cart">
-                                        <i class="fas fa-cart-plus"></i>
-                                    </button>
-                                </form>
+                                @livewire('add-to-cart-button', ['productId' => $product->id], key('add-to-cart-'.$product->id))
                             </div>
                         </div>
                     </div>

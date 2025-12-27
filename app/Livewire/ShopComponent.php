@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Product;
+use App\Models\Cart;
 use TomatoPHP\FilamentCms\Models\Category;
 
 class ShopComponent extends Component

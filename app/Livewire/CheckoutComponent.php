@@ -121,7 +121,7 @@ class CheckoutComponent extends Component
                     }
                 }
 
-                return redirect()->route('checkout.success', ['reference' => $reference]);
+                return $this->redirectRoute('checkout.success', ['reference' => $reference], navigate: true);
             }
 
             $data = [

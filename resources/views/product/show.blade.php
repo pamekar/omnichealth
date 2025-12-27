@@ -92,22 +92,8 @@
                 @endif
 
                 @if($product->is_in_stock)
-                <div class="add-to-cart-section">
-                    <form action="{{ route('cart.store') }}" method="POST">
-                        @csrf
-                        <input type="hidden" value="{{ $product->id }}" name="id">
-                        <input type="hidden" value="{{ $product->name }}" name="name">
-                        <input type="hidden" value="{{ $product->price }}" name="price">
-
-                        <div class="quantity-control">
-                            <label for="quantity">Quantity:</label>
-                            <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ $product->max_cart > 0 ? $product->max_cart : 10 }}" class="form-input">
-                        </div>
-
-                        <button type="submit" class="add-to-cart-btn-large">
-                            <i class="fas fa-cart-plus"></i> Add to Cart
-                        </button>
-                    </form>
+                <div class="add-to-cart-section" style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                    @livewire('add-to-cart-button', ['productId' => $product->id, 'large' => true], key('add-to-cart-large-'.$product->id))
                 </div>
                 @endif
 
