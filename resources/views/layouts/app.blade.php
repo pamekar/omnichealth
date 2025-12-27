@@ -51,9 +51,12 @@
             </div>
             <div class="footer-section">
                 <h4>Contact Us</h4>
-                <p><i class="fas fa-map-marker-alt"></i> 123 Health St, Medtown, USA</p>
-                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
-                <p><i class="fas fa-envelope"></i> support@omnic.com</p>
+                @php
+                    $company = \App\Models\Company::find(config('filament-ecommerce.default_company_id'));
+                @endphp
+                <p><i class="fas fa-map-marker-alt"></i> {{ $company?->address ?? '123 Health St, Medtown, USA' }}</p>
+                <p><i class="fas fa-phone"></i> {{ $company?->phone ?? '+1 (555) 123-4567' }}</p>
+                <p><i class="fas fa-envelope"></i> {{ $company?->email ?? 'support@omnic.com' }}</p>
             </div>
         </div>
         <div class="footer-bottom">
