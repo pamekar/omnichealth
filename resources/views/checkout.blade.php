@@ -8,7 +8,7 @@
             <!-- Checkout Form -->
             <div class="checkout-form-card">
                 <h1 class="checkout-title">Checkout</h1>
-                
+
                 <form action="{{ route('checkout.process') }}" method="POST">
                     @csrf
                     <div class="form-row">
@@ -36,7 +36,7 @@
                         <label for="address" class="form-label">Address</label>
                         <textarea name="address" id="address" class="form-control" rows="3" required></textarea>
                     </div>
-                    
+
                     <!-- Mobile only button (optional, but cleaner if kept with summary) -->
                 </form>
             </div>
@@ -51,18 +51,22 @@
                                 <span class="item-name">{{ $item->product->name ?? $item->item }}</span>
                                 <span class="item-qty">x{{ $item->qty }}</span>
                             </div>
-                            <span class="item-price">₦{{ number_format($item->price * $item->qty, 2) }}</span>
+                            @if(config('filament-ecommerce.enable_pricing'))
+                                <span class="item-price">₦{{ number_format($item->price * $item->qty, 2) }}</span>
+                            @endif
                         </div>
                     @endforeach
                 </div>
-                
-                <div class="order-total">
-                    <span>Total</span>
-                    <span>₦{{ number_format(App\Models\Cart::getTotal(), 2) }}</span>
-                </div>
+
+                @if(config('filament-ecommerce.enable_pricing'))
+                    <div class="order-total">
+                        <span>Total</span>
+                        <span>₦{{ number_format(App\Models\Cart::getTotal(), 2) }}</span>
+                    </div>
+                @endif
 
                 <button type="submit" onclick="document.querySelector('form').submit()" class="btn btn-primary btn-block">
-                    Pay with Paystack
+                    {{ config('filament-ecommerce.enable_pricing') ? 'Pay with Flutterwave' : 'Request Quote' }}
                 </button>
             </div>
         </div>

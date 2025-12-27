@@ -46,18 +46,22 @@
                             <span class="item-name">{{ $item->product->name ?? $item->item }}</span>
                             <span class="item-qty">x{{ $item->qty }}</span>
                         </div>
-                        <span class="item-price">₦{{ number_format($item->price * $item->qty, 2) }}</span>
+                        @if(config('filament-ecommerce.enable_pricing'))
+                            <span class="item-price">₦{{ number_format($item->price * $item->qty, 2) }}</span>
+                        @endif
                     </div>
                 @endforeach
             </div>
             
+            @if(config('filament-ecommerce.enable_pricing'))
             <div class="order-total">
                 <span>Total</span>
                 <span>₦{{ number_format(\App\Models\Cart::getTotal(), 2) }}</span>
             </div>
+            @endif
 
             <button wire:click="process" wire:loading.attr="disabled" class="btn btn-primary btn-block">
-                <span wire:loading.remove>Pay with Paystack</span>
+                <span wire:loading.remove>{{ config('filament-ecommerce.enable_pricing') ? 'Pay with Paystack' : 'Request Quote' }}</span>
                 <span wire:loading>Processing...</span>
             </button>
             

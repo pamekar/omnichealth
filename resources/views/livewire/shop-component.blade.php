@@ -44,7 +44,9 @@
                             </h3>
                             <p class="product-description">{!! Str::limit(strip_tags($product->description), 80) ?: 'High-quality medical product.' !!}</p>
                             <div class="product-footer">
-                                <span class="product-price">₦{{ number_format($product->price, 2) }}</span>
+                                @if(config('filament-ecommerce.enable_pricing'))
+                                    <span class="product-price">₦{{ number_format($product->price, 2) }}</span>
+                                @endif
                                 <form action="{{ route('cart.store') }}" method="POST">
                                     @csrf
                                     <input type="hidden" value="{{ $product->id }}" name="id">

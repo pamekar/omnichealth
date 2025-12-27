@@ -21,16 +21,18 @@
                 @if(count($cartItems) > 0)
                     <div class="cart-container" data-aos="fade-up" data-aos-delay="200">
                         <div class="cart-items">
-                            <div class="cart-header">
+                            <div class="cart-header" style="grid-template-columns: {{ config('filament-ecommerce.enable_pricing') ? '3fr 1fr 1fr 1fr 0.5fr' : '3fr 1fr 0.5fr' }}">
                                 <div class="header-product">Product</div>
                                 <div class="header-quantity">Quantity</div>
-                                <div class="header-price">Price</div>
-                                <div class="header-total">Total</div>
+                                @if(config('filament-ecommerce.enable_pricing'))
+                                    <div class="header-price">Price</div>
+                                    <div class="header-total">Total</div>
+                                @endif
                                 <div class="header-remove"></div>
                             </div>
 
                             @foreach($cartItems as $item)
-                                <div class="cart-item">
+                                <div class="cart-item" style="grid-template-columns: {{ config('filament-ecommerce.enable_pricing') ? '3fr 1fr 1fr 1fr 0.5fr' : '3fr 1fr 0.5fr' }}">
                                     <div class="item-product">
                                         <img
                                             src="https://placehold.co/100x100/007bff/white?text={{ urlencode(substr($item->item, 0, 1)) }}"
@@ -49,9 +51,11 @@
                                             <button type="submit" class="btn-update">Update</button>
                                         </form>
                                     </div>
-                                    <div class="item-price">${{ number_format($item->price / 100, 2) }}</div>
-                                    <div class="item-total">
-                                        ${{ number_format(($item->price * $item->qty) / 100, 2) }}</div>
+                                    @if(config('filament-ecommerce.enable_pricing'))
+                                        <div class="item-price">${{ number_format($item->price / 100, 2) }}</div>
+                                        <div class="item-total">
+                                            ${{ number_format(($item->price * $item->qty) / 100, 2) }}</div>
+                                    @endif
                                     <div class="item-remove">
                                         <form action="{{ route('cart.remove') }}" method="POST">
                                             @csrf
@@ -68,17 +72,21 @@
                             <h3>Order Summary</h3>
                             <div class="summary-row">
                                 <span>Subtotal ({{ Cart::getTotalQuantity() }} items)</span>
-                                <span>${{ number_format(Cart::getTotal() / 100, 2) }}</span>
+                                @if(config('filament-ecommerce.enable_pricing'))
+                                    <span>${{ number_format(Cart::getTotal() / 100, 2) }}</span>
+                                @endif
                             </div>
-                            <div class="summary-row">
-                                <span>Shipping</span>
-                                <span>$10.00</span>
-                            </div>
-                            <div class="summary-total">
-                                <span>Total</span>
-                                <span>${{ number_format((Cart::getTotal() / 100) + 10, 2) }}</span>
-                            </div>
-                            <a href="/checkout" class="btn btn-primary btn-checkout">Proceed to Checkout</a>
+                            @if(config('filament-ecommerce.enable_pricing'))
+                                <div class="summary-row">
+                                    <span>Shipping</span>
+                                    <span>$10.00</span>
+                                </div>
+                                <div class="summary-total">
+                                    <span>Total</span>
+                                    <span>${{ number_format((Cart::getTotal() / 100) + 10, 2) }}</span>
+                                </div>
+                            @endif
+                            <a href="/checkout" class="btn btn-primary btn-checkout">{{ config('filament-ecommerce.enable_pricing') ? 'Proceed to Checkout' : 'Request Quote' }}</a>
                         </div>
                     </div>
                     <div class="cart-actions" data-aos="fade-up">

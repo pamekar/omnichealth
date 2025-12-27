@@ -15,8 +15,10 @@
                         <div class="cart-header">
                             <div class="header-product">Product</div>
                             <div class="header-quantity">Quantity</div>
-                            <div class="header-price">Price</div>
-                            <div class="header-total">Total</div>
+                            @if(config('filament-ecommerce.enable_pricing'))
+                                <div class="header-price">Price</div>
+                                <div class="header-total">Total</div>
+                            @endif
                             <div class="header-remove"></div>
                         </div>
 
@@ -40,9 +42,11 @@
                                                class="quantity-input">
                                     </div>
                                 </div>
-                                <div class="item-price">₦{{ number_format($item->price / 100, 2) }}</div>
-                                <div class="item-total">
-                                    ₦{{ number_format(($item->price * $item->qty) / 100, 2) }}</div>
+                                @if(config('filament-ecommerce.enable_pricing'))
+                                    <div class="item-price">₦{{ number_format($item->price / 100, 2) }}</div>
+                                    <div class="item-total">
+                                        ₦{{ number_format(($item->price * $item->qty) / 100, 2) }}</div>
+                                @endif
                                 <div class="item-remove">
                                     <button wire:click="removeItem({{ $item->id }})" class="btn-remove" aria-label="Remove item">
                                         <i class="fas fa-trash-alt"></i>
@@ -56,8 +60,11 @@
                         <h3>Order Summary</h3>
                         <div class="summary-row">
                             <span>Subtotal ({{ \App\Models\Cart::getTotalQuantity() }} items)</span>
-                            <span>₦{{ number_format(\App\Models\Cart::getTotal() / 100, 2) }}</span>
+                            @if(config('filament-ecommerce.enable_pricing'))
+                                <span>₦{{ number_format(\App\Models\Cart::getTotal() / 100, 2) }}</span>
+                            @endif
                         </div>
+                        @if(config('filament-ecommerce.enable_pricing'))
                         <div class="summary-row">
                             <span>Shipping</span>
                             <span>₦10.00</span>
@@ -66,7 +73,10 @@
                             <span>Total</span>
                             <span>₦{{ number_format((\App\Models\Cart::getTotal() / 100) + 10, 2) }}</span>
                         </div>
-                        <a href="/checkout" wire:navigate class="btn btn-primary btn-checkout">Proceed to Checkout</a>
+                        @endif
+                        <a href="/checkout" wire:navigate class="btn btn-primary btn-checkout">
+                            {{ config('filament-ecommerce.enable_pricing') ? 'Proceed to Checkout' : 'Request Quote' }}
+                        </a>
                     </div>
                 </div>
                 <div class="cart-actions" data-aos="fade-up">
@@ -114,7 +124,7 @@
 
         .cart-header {
             display: grid;
-            grid-template-columns: 3fr 1fr 1fr 1fr 0.5fr;
+            grid-template-columns: {{ config('filament-ecommerce.enable_pricing') ? '3fr 1fr 1fr 1fr 0.5fr' : '3fr 1fr 0.5fr' }};
             gap: 1rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid var(--border-color);
@@ -130,7 +140,7 @@
 
         .cart-item {
             display: grid;
-            grid-template-columns: 3fr 1fr 1fr 1fr 0.5fr;
+            grid-template-columns: {{ config('filament-ecommerce.enable_pricing') ? '3fr 1fr 1fr 1fr 0.5fr' : '3fr 1fr 0.5fr' }};
             gap: 1rem;
             align-items: center;
             padding: 1.5rem 0;
