@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="address" class="form-label">Address</label>
+                        <label for="address" class="form-label">Notes</label>
                         <textarea name="address" id="address" class="form-control" rows="3" required></textarea>
                     </div>
 
