@@ -8,6 +8,8 @@ use App\Models\Account;
 use App\Services\Payment\PaymentFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\QuoteRequested;
 
 class CheckoutController extends Controller
 {
@@ -75,6 +77,7 @@ class CheckoutController extends Controller
 
             $order = Order::create([
                 'account_id' => $account->id,
+                'company_id' => config('filament-ecommerce.default_company_id', 1),
                 'user_id' => auth()->id(), // or null if guest checkout
                 'name' => $request->first_name . ' ' . $request->last_name,
                 'email' => $request->email,
@@ -82,19 +85,35 @@ class CheckoutController extends Controller
                 'address' => $request->address,
                 'total' => $amount,
                 'status' => 'pending',
-                'payment_method' => $driver,
+                'payment_method' => config('filament-ecommerce.enable_pricing') ? $driver : 'quote',
                 'payment_status' => 'pending',
                 'transaction_id' => $reference,
+                'source' => 'website'
             ]);
 
             foreach (Cart::getContent() as $item) {
                 $order->ordersItems()->create([
                     'product_id' => $item->id,
                     'account_id' => $account->id,
-                    'qty' => $item->quantity,
+                    'qty' => $item->qty,
                     'price' => $item->price,
-                    'total' => $item->price * $item->quantity,
+                    'total' => $item->price * $item->qty,
                 ]);
+            }
+
+            if (!config('filament-ecommerce.enable_pricing')) {
+                Cart::clear();
+
+                $storeEmail = config('filament-ecommerce.store_email');
+                if ($storeEmail) {
+                    try {
+                        Mail::to($storeEmail)->send(new QuoteRequested($order));
+                    } catch (\Exception $e) {
+                        Log::error('Failed to send quote request email: ' . $e->getMessage());
+                    }
+                }
+
+                return redirect()->route('checkout.success', ['reference' => $reference]);
             }
 
             $data = [
@@ -136,6 +155,14 @@ class CheckoutController extends Controller
 
             if (!$reference) {
                  return redirect()->route('checkout.error')->with('error', 'No transaction reference found.');
+            }
+
+            if (!config('filament-ecommerce.enable_pricing')) {
+                $order = Order::where('transaction_id', $reference)->first();
+                if ($order) {
+                    return view('success');
+                }
+                return redirect()->route('checkout.error')->with('error', 'Quote request not found.');
             }
 
             $paymentDetails = $gateway->verify($reference);

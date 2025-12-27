@@ -8,6 +8,8 @@ use App\Models\Account;
 use App\Models\Order;
 use App\Services\Payment\PaymentFactory;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\QuoteRequested;
 
 class CheckoutComponent extends Component
 {
@@ -84,6 +86,7 @@ class CheckoutComponent extends Component
 
             $order = Order::create([
                 'account_id' => $account->id,
+                'company_id' => config('filament-ecommerce.default_company_id', 1),
                 'user_id' => auth()->id(),
                 'name' => $this->first_name . ' ' . $this->last_name,
                 'email' => $this->email,
@@ -91,7 +94,7 @@ class CheckoutComponent extends Component
                 'address' => $this->address,
                 'total' => $amount,
                 'status' => 'pending',
-                'payment_method' => $driver,
+                'payment_method' => config('filament-ecommerce.enable_pricing') ? $driver : 'quote',
                 'payment_status' => 'pending',
                 'transaction_id' => $reference,
             ]);
@@ -104,6 +107,21 @@ class CheckoutComponent extends Component
                     'price' => $item->price,
                     'total' => $item->price * $item->quantity,
                 ]);
+            }
+
+            if (!config('filament-ecommerce.enable_pricing')) {
+                Cart::clear();
+                
+                $storeEmail = config('filament-ecommerce.store_email');
+                if ($storeEmail) {
+                    try {
+                        Mail::to($storeEmail)->send(new QuoteRequested($order));
+                    } catch (\Exception $e) {
+                        Log::error('Failed to send quote request email: ' . $e->getMessage());
+                    }
+                }
+
+                return redirect()->route('checkout.success', ['reference' => $reference]);
             }
 
             $data = [
