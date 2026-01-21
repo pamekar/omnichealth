@@ -43,7 +43,7 @@ class ViewOrder extends ViewRecord
                                 ->disabled()
                                 ->numeric(),
                             Forms\Components\TextInput::make('price')
-                                ->label('Price')
+                                ->label('Unit Price')
                                 ->required()
                                 ->numeric(),
                         ])
