@@ -23,7 +23,7 @@ class AddToCartButton extends Component
         $product = Product::find($this->productId);
 
         if (!$product) {
-            $this->dispatch('notify', message: 'Product not found!', type: 'error');
+            $this->dispatch('show-notification', message: 'Product not found!', type: 'error');
             return;
         }
 
@@ -47,7 +47,7 @@ class AddToCartButton extends Component
             ]);
         }
 
-        $this->dispatch('notify', message: $product->name . ' added to cart!', type: 'success');
+        $this->dispatch('show-notification', message: $product->name . ' added to cart!', type: 'success');
         $this->dispatch('cartUpdated');
     }
 

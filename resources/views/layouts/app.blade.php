@@ -45,7 +45,8 @@
                 }, 5000);
             }
         }"
-        @notify.window="add($event.detail.message, $event.detail.type)"
+        @show-notification.window="add($event.detail.message, $event.detail.type)"
+        x-cloak
         class="fixed top-4 right-4 z-50 flex flex-col gap-3 pointer-events-none"
         style="max-width: 350px; position: fixed; top: 1.5rem; right: 1.5rem; z-index: 9999;">
         <template x-for="n in notifications" :key="n.id">
