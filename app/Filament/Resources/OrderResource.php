@@ -760,7 +760,7 @@ class OrderResource extends Resource
                             'id' => $item->id,
                             'product_name' => $item->product->name ?? 'Unknown Product',
                             'qty' => $item->qty,
-                            'price' => $item->price,
+                            'price' => $item->price > 0 ? $item->price : ($item->product->price ?? 0),
                         ])->toArray()
                     ])
                     ->action(function($record, array $data){
