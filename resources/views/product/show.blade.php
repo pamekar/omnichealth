@@ -112,7 +112,7 @@
                             <p><strong>Category:</strong> {{ $product->category->name }}</p>
                         @endif
                         @if($product->sku)
-                            <p><strong>SKU:</strong> {{ $product->sku }}</p>
+                            {{--<p><strong>SKU:</strong> {{ $product->sku }}</p>--}}
                         @endif
                         @if($product->barcode)
                             <p><strong>Barcode:</strong> {{ $product->barcode }}</p>

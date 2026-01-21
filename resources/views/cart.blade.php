@@ -39,7 +39,7 @@
                                             alt="{{ $item->item }}">
                                         <div>
                                             <p class="item-name">{{ $item->item }}</p>
-                                            <small>SKU: MOCKSKU123</small>
+                                            {{--<small>SKU: MOCKSKU123</small>--}}
                                         </div>
                                     </div>
                                     <div class="item-quantity">

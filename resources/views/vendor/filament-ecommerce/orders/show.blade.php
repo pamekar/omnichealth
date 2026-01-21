@@ -15,7 +15,7 @@
             <div class="w-full">
                 <div class=" my-4">
                     <img src="{{$this->getRecord()->company?->getFirstMediaUrl('logo')}}"
-                         alt="{{$this->getRecord()->company?->name}}" class="h-12 ">
+                         alt="{{$this->getRecord()->company?->name}}" class="h-16">
                 </div>
                 <div class="flex flex-col">
                     <div>

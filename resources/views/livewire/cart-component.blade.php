@@ -30,14 +30,14 @@
                                         alt="{{ $item->item }}">
                                     <div>
                                         <p class="item-name">{{ $item->item }}</p>
-                                        <small>SKU: MOCKSKU123</small>
+                                        {{--<small>SKU: MOCKSKU123</small>--}}
                                     </div>
                                 </div>
                                 <div class="item-quantity">
                                     <div class="quantity-form">
-                                        <input type="number" 
+                                        <input type="number"
                                                wire:change="updateQuantity({{ $item->id }}, $event.target.value)"
-                                               value="{{ $item->qty }}" 
+                                               value="{{ $item->qty }}"
                                                min="1"
                                                class="quantity-input">
                                     </div>
