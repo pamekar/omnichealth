@@ -55,7 +55,16 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 SpatieLaravelTranslatablePlugin::make()->defaultLocales(['en']),
-            ])
+            ])->plugin(
+                FilamentEcommercePlugin::make()
+                    ->useOrder(false)
+//                    ->useCoupon(false)
+//                    ->useGiftCard(false)
+//                    ->useReferralCode(false)
+//                    ->allowOrderExport(false)
+//                    ->allowOrderImport(false)
+//                    ->useWidgets(false)
+            )
             ->authMiddleware([
                 Authenticate::class,
             ]);
