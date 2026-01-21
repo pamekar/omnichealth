@@ -24,9 +24,9 @@ class CheckoutComponent extends Component
         if (auth()->check()) {
             $user = auth()->user();
             $account = Account::where('email', $user->email)->first();
-            
+
             $this->email = $user->email;
-            
+
             // Try to split name if available
             $names = explode(' ', $user->name, 2);
             $this->first_name = $names[0] ?? '';
@@ -35,8 +35,8 @@ class CheckoutComponent extends Component
             if ($account) {
                 $this->phone = $account->phone;
                 $this->address = $account->address;
-                
-                // Override names if account has them more accurately? 
+
+                // Override names if account has them more accurately?
                 // Let's stick to user name for now or account name if user name is empty
             }
         }
@@ -103,15 +103,15 @@ class CheckoutComponent extends Component
                 $order->ordersItems()->create([
                     'product_id' => $item->id,
                     'account_id' => $account->id,
-                    'qty' => $item->quantity,
+                    'qty' => $item->qty,
                     'price' => $item->price,
-                    'total' => $item->price * $item->quantity,
+                    'total' => $item->price * $item->qty,
                 ]);
             }
 
             if (!config('filament-ecommerce.enable_pricing')) {
                 Cart::clear();
-                
+
                 $storeEmail = config('filament-ecommerce.store_email');
                 if ($storeEmail) {
                     try {
@@ -142,7 +142,7 @@ class CheckoutComponent extends Component
             // Livewire action usually expects a redirect return if we want to change page
             // The gateway initialize usually returns a redirect or response object.
             // If it returns a RedirectResponse, returning it here works in Livewire.
-            
+
             return $gateway->initialize($data);
 
         } catch (\Exception $e) {
